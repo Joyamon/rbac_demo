@@ -15,7 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomAuthenticationForm(AuthenticationForm):
-    username = forms.CharField(label=_("用户名"), max_length=254)
+    username = forms.CharField(label=_("用户"), max_length=254)
     password = forms.CharField(label=_("密码"), widget=forms.PasswordInput)
 
     error_messages = {
