@@ -27,6 +27,7 @@ urlpatterns = [
     path('accounts/register/', account_views.register, name='register'),
     path('accounts/manage-roles/', account_views.manage_roles, name='manage_roles'),
     path('accounts/roles/<int:role_id>/delete/', account_views.delete_role, name='delete_role'),
+    path('accounts/roles/<int:role_id>/edit/', account_views.edit_role, name='edit_role'),
     path('accounts/manage-permissions/', account_views.manage_permissions, name='manage_permissions'),
     path('accounts/assign-role/<int:user_id>/', account_views.assign_role, name='assign_role'),
     path('accounts/assign-permission/<int:role_id>/', account_views.assign_permission, name='assign_permission'),

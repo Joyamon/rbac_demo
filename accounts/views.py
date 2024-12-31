@@ -62,6 +62,21 @@ def delete_role(request, role_id):
 
 
 @login_required
+@permission_required('accounts.edit_role', raise_exception=True)
+def edit_role(request, role_id):
+    role = get_object_or_404(Role, id=role_id)
+    if request.method == 'POST':
+        form = RoleForm(request.POST, instance=role)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '角色已更新。')
+            return redirect('manage_roles')
+    else:
+        form = RoleForm(instance=role)
+    return render(request, 'accounts/edit_role.html', {'form': form, 'role': role})
+
+
+@login_required
 def manage_permissions(request):
     permissions = Permission.objects.all()
     if request.method == 'POST':
