@@ -135,8 +135,10 @@ class UserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 @method_decorator([login_required, user_management_required], name='dispatch')
 class UserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = CustomUser
+    pk = 'user_id'
+    pk_url_kwarg = 'user_id'
     template_name = 'accounts/user_detail.html'
-    context_object_name = 'user'
+    context_object_name = 'users'
 
     def test_func(self):
         return self.request.user.is_staff or self.request.user == self.get_object()
@@ -149,11 +151,14 @@ class UserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 @method_decorator([login_required, user_management_required], name='dispatch')
 class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = CustomUser
+    pk = 'user_id'
+    pk_url_kwarg = 'user_id'
     form_class = UserEditForm
     template_name = 'accounts/user_edit.html'
+    context_object_name = 'users'
 
     def get_success_url(self):
-        return reverse_lazy('user_detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('user_detail', kwargs={'user_id': self.object.pk})
 
     def test_func(self):
         return self.request.user.is_staff or self.request.user == self.get_object()
