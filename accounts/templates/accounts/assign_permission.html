@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Assign Permission to {{ role.name }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    <select name="permission">
+      {% for permission in permissions %}
+        <option value="{{ permission.id }}">{{ permission.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Assign Permission</button>
+  </form>
+{% endblock %}

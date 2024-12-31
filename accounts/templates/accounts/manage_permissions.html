@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Manage Permissions</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Permission</button>
+  </form>
+  <h3>Existing Permissions</h3>
+  <ul>
+    {% for permission in permissions %}
+      <li>{{ permission.name }} ({{ permission.codename }})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
