@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
-from .models import Role, Permission, UserRole, RolePermission, CustomUser
+from .models import Role, Permission, UserRole, CustomUser
 from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -28,37 +28,37 @@ def register(request):
     return render(request, 'accounts/register.html', {'form': form})
 
 
-@login_required
-@permission_required('accounts.add_role', raise_exception=True)
-def manage_roles(request):
-    if request.method == 'POST':
-        form = RoleForm(request.POST)
-        if form.is_valid():
-            role = form.save()
-            messages.success(request, f'角色 {role.name} 创建成功！')
-            return redirect('manage_roles')
-        else:
-            messages.error(request, '创建角色失败，请检查输入。')
-    else:
-        form = RoleForm()
+# @login_required
+# @permission_required('accounts.add_role', raise_exception=True)
+# def manage_roles(request):
+#     if request.method == 'POST':
+#         form = RoleForm(request.POST)
+#         if form.is_valid():
+#             role = form.save()
+#             messages.success(request, f'角色 {role.name} 创建成功！')
+#             return redirect('manage_roles')
+#         else:
+#             messages.error(request, '创建角色失败，请检查输入。')
+#     else:
+#         form = RoleForm()
+#
+#     roles = Role.objects.all().order_by('name')
+#     return render(request, 'accounts/manage_roles.html', {
+#         'form': form,
+#         'roles': roles
+#     })
 
-    roles = Role.objects.all().order_by('name')
-    return render(request, 'accounts/manage_roles.html', {
-        'form': form,
-        'roles': roles
-    })
 
-
-@login_required
-@permission_required('accounts.delete_role', raise_exception=True)
-def delete_role(request, role_id):
-    role = get_object_or_404(Role, id=role_id)
-    try:
-        role.delete()
-        messages.success(request, f'角色 {role.name} 已成功删除。')
-    except ProtectedError:
-        messages.error(request, f'无法删除角色 {role.name}，因为它仍在使用中。')
-    return redirect('manage_roles')
+# @login_required
+# @permission_required('accounts.delete_role', raise_exception=True)
+# def delete_role(request, role_id):
+#     role = get_object_or_404(Role, id=role_id)
+#     try:
+#         role.delete()
+#         messages.success(request, f'角色 {role.name} 已成功删除。')
+#     except ProtectedError:
+#         messages.error(request, f'无法删除角色 {role.name}，因为它仍在使用中。')
+#     return redirect('manage_roles')
 
 
 @login_required
@@ -76,44 +76,67 @@ def edit_role(request, role_id):
     return render(request, 'accounts/edit_role.html', {'form': form, 'role': role})
 
 
-@login_required
-def manage_permissions(request):
-    permissions = Permission.objects.all()
-    if request.method == 'POST':
-        form = PermissionForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, '权限创建成功！')
-            return redirect('manage_permissions')
-    else:
-        form = PermissionForm()
-    return render(request, 'accounts/manage_permissions.html', {'permissions': permissions, 'form': form})
+# @login_required
+# def manage_permissions(request):
+#     permissions = Permission.objects.all()
+#     if request.method == 'POST':
+#         form = PermissionForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, '权限创建成功！')
+#             return redirect('manage_permissions')
+#     else:
+#         form = PermissionForm()
+#     return render(request, 'accounts/manage_permissions.html', {'permissions': permissions, 'form': form})
 
 
-@login_required
-def assign_role(request, user_id):
-    user = CustomUser.objects.get(id=user_id)
-    roles = Role.objects.all()
-    if request.method == 'POST':
-        role_id = request.POST.get('role')
-        role = Role.objects.get(id=role_id)
-        UserRole.objects.create(user=user, role=role)
-        messages.success(request, f'角色 {role.name} 已分配给用户 {user.username}')
-        return redirect('user_detail', user_id=user.id)
-    return render(request, 'accounts/assign_role.html', {'user': user, 'roles': roles})
+# @login_required
+# def assign_role(request, user_id):
+#     user = CustomUser.objects.get(id=user_id)
+#     roles = Role.objects.all()
+#     if request.method == 'POST':
+#         role_id = request.POST.get('role')
+#         role = Role.objects.get(id=role_id)
+#         UserRole.objects.create(user=user, role=role)
+#         messages.success(request, f'角色 {role.name} 已分配给用户 {user.username}')
+#         return redirect('user_detail', user_id=user.id)
+#     return render(request, 'accounts/assign_role.html', {'user': user, 'roles': roles})
+#
 
-
-@login_required
-def assign_permission(request, role_id):
-    role = Role.objects.get(id=role_id)
-    permissions = Permission.objects.all()
-    if request.method == 'POST':
-        permission_id = request.POST.get('permission')
-        permission = Permission.objects.get(id=permission_id)
-        RolePermission.objects.create(role=role, permission=permission)
-        messages.success(request, f'权限 {permission.name} 已分配给角色 {role.name}')
-        return redirect('role_detail', role_id=role.id)
-    return render(request, 'accounts/assign_permission.html', {'role': role, 'permissions': permissions})
+# @login_required
+# @permission_required('accounts.change_role', raise_exception=True)
+# def assign_permission(request, role_id):
+#     role = get_object_or_404(Role, id=role_id)
+#     all_permissions = Permission.objects.all().select_related('content_type').order_by('content_type__app_label',
+#                                                                                        'codename')
+#
+#     permission_groups = {}
+#     for permission in all_permissions:
+#         app_label = permission.content_type.app_label
+#         if app_label not in permission_groups:
+#             permission_groups[app_label] = []
+#         permission_groups[app_label].append(permission)
+#
+#     if request.method == 'POST':
+#         selected_permissions = request.POST.getlist('permissions')
+#
+#         try:
+#             role.permissions.clear()
+#             role.permissions.add(*selected_permissions)
+#             messages.success(request, f'已成功更新角色 {role.name} 的权限。')
+#             return redirect('manage_roles')
+#         except Exception as e:
+#             messages.error(request, f'更新权限时出错：{str(e)}')
+#
+#     current_permissions = set(role.permissions.values_list('id', flat=True))
+#
+#     context = {
+#         'role': role,
+#         'permission_groups': permission_groups,
+#         'current_permissions': current_permissions,
+#     }
+#
+#     return render(request, 'accounts/assign_permission.html', context)
 
 
 def user_logout(request):
@@ -153,7 +176,7 @@ class UserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     pk = 'user_id'
     pk_url_kwarg = 'user_id'
     template_name = 'accounts/user_detail.html'
-    context_object_name = 'users'
+    context_object_name = 'user'
 
     def test_func(self):
         return self.request.user.is_staff or self.request.user == self.get_object()
@@ -170,7 +193,7 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     pk_url_kwarg = 'user_id'
     form_class = UserEditForm
     template_name = 'accounts/user_edit.html'
-    context_object_name = 'users'
+    context_object_name = 'user'
 
     def get_success_url(self):
         return reverse_lazy('user_detail', kwargs={'user_id': self.object.pk})
@@ -271,3 +294,103 @@ def user_login(request):
     else:
         form = CustomAuthenticationForm()
     return render(request, 'accounts/login.html', {'form': form})
+
+
+@login_required
+def manage_roles(request):
+    if request.method == 'POST':
+        form = RoleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '角色创建成功。')
+            return redirect('manage_roles')
+    else:
+        form = RoleForm()
+
+    roles = Role.objects.all()
+    return render(request, 'accounts/manage_roles.html', {'form': form, 'roles': roles})
+
+
+@login_required
+def delete_role(request, role_id):
+    role = get_object_or_404(Role, id=role_id)
+    try:
+        role.delete()
+        messages.success(request, f'角色 {role.name} 已成功删除。')
+    except ProtectedError:
+        messages.error(request, f'无法删除角色 {role.name}，因为它仍在使用中。')
+    return redirect('manage_roles')
+
+@login_required
+def manage_permissions(request):
+    if request.method == 'POST':
+        form = PermissionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '权限创建成功。')
+            return redirect('manage_permissions')
+    else:
+        form = PermissionForm()
+
+    permissions = Permission.objects.all()
+    return render(request, 'accounts/manage_permissions.html', {'form': form, 'permissions': permissions})
+
+
+@login_required
+def delete_permission(request, permission_id):
+    permission = get_object_or_404(Permission, id=permission_id)
+    try:
+        permission.delete()
+        messages.success(request, f'权限 "{permission.name}" 已成功删除。')
+    except ProtectedError:
+        messages.error(request, f'无法删除权限 "{permission.name}"，因为它正被使用。')
+    return redirect('manage_permissions')
+
+
+@login_required
+def assign_permission(request, role_id):
+    role = get_object_or_404(Role, id=role_id)
+    permissions = Permission.objects.all()
+
+    if request.method == 'POST':
+        selected_permissions = request.POST.getlist('permissions')
+        role.permissions.clear()
+        role.permissions.add(*selected_permissions)
+        messages.success(request, f'已成功更新角色 "{role.name}" 的权限。')
+        return redirect('manage_roles')
+
+    current_permissions = role.permissions.all()
+    context = {
+        'role': role,
+        'permissions': permissions,
+        'current_permissions': current_permissions,
+    }
+    return render(request, 'accounts/assign_permission.html', context)
+
+
+@login_required
+def assign_role(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    roles = Role.objects.all()
+
+    if request.method == 'POST':
+        selected_roles = request.POST.getlist('roles')
+        UserRole.objects.filter(user=user).delete()
+        for role_id in selected_roles:
+            UserRole.objects.create(user=user, role_id=role_id)
+        messages.success(request, f'已成功更新用户 "{user.username}" 的角色。')
+        return redirect('user_list')
+
+    current_roles = user.user_roles.all().values_list('role_id', flat=True)
+    context = {
+        'user': user,
+        'roles': roles,
+        'current_roles': current_roles,
+    }
+    return render(request, 'accounts/assign_role.html', context)
+
+# def has_permission(user, permission_codename):
+#     return UserRole.objects.filter(
+#         user=user,
+#         role__permissions__codename=permission_codename
+#     ).exists()

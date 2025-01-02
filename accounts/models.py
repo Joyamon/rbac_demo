@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
+from django.contrib.auth.models import AbstractUser, Group, Permission as DjangoPermission
 
 
 class CustomUser(AbstractUser):
@@ -9,6 +10,7 @@ class CustomUser(AbstractUser):
             ("manage_roles", "Can manage roles"),
             ("manage_permissions", "Can manage permissions"),
         ]
+
     is_active = models.BooleanField(default=True)
     groups = models.ManyToManyField(
         Group,
@@ -43,33 +45,62 @@ class CustomUser(AbstractUser):
         return self.username
 
 
-class Role(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+# class Role(models.Model):
+#     name = models.CharField(max_length=100, unique=True)
+#     description = models.TextField(blank=True)
+#     permissions = models.ManyToManyField(
+#         DjangoPermission,
+#         verbose_name='permissions',
+#         blank=True,
+#         help_text='Specific permissions for this role.',
+#         related_name='roles'
+#     )
+#
+#     def __str__(self):
+#         return self.name
+
+
+# class UserRole(models.Model):
+#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+#     role = models.ForeignKey(Role, on_delete=models.CASCADE)
+#
+#     class Meta:
+#         unique_together = ('user', 'role')
+#
+#
+# class RolePermission(models.Model):
+#     role = models.ForeignKey(Role, on_delete=models.CASCADE)
+#     permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
+#
+#     class Meta:
+#         unique_together = ('role', 'permission')
+#
+#
+class Permission(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    codename = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
 
 
-class Permission(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    codename = models.CharField(max_length=100, unique=True)
+#
+class Role(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True)
+    permissions = models.ManyToManyField(Permission, related_name='roles')
 
     def __str__(self):
         return self.name
 
 
 class UserRole(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='user_roles')
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('user', 'role')
 
-
-class RolePermission(models.Model):
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ('role', 'permission')
+    def __str__(self):
+        return f"{self.user.username} - {self.role.name}"

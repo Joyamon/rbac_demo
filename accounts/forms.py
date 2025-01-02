@@ -55,6 +55,24 @@ class CustomAuthenticationForm(AuthenticationForm):
         return self.cleaned_data
 
 
+# class RoleForm(forms.ModelForm):
+#     class Meta:
+#         model = Role
+#         fields = ['name', 'description']
+
+
+# class PermissionForm(forms.ModelForm):
+#     class Meta:
+#         model = Permission
+#         fields = ['name', 'codename']
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'is_active']
+
+
 class RoleForm(forms.ModelForm):
     class Meta:
         model = Role
@@ -64,10 +82,4 @@ class RoleForm(forms.ModelForm):
 class PermissionForm(forms.ModelForm):
     class Meta:
         model = Permission
-        fields = ['name', 'codename']
-
-
-class UserEditForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'is_active']
+        fields = ['name', 'codename', 'description']
