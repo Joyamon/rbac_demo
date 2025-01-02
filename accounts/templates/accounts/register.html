@@ -3,26 +3,227 @@
 {% block title %}注册 - Django RBAC 项目{% endblock %}
 
 {% block content %}
-  <div class="max-w-md mx-auto">
-    <h2 class="text-2xl font-bold mb-4">注册新用户</h2>
-    <form method="post" class="space-y-4">
-      {% csrf_token %}
-      {% for field in form %}
-        <div>
-          {{ field.label_tag }}
-          {{ field }}
-          {% if field.help_text %}
-            <small class="text-gray-500">{{ field.help_text|safe }}</small>
-          {% endif %}
-          {% for error in field.errors %}
-            <p class="text-red-500 text-sm">{{ error }}</p>
-          {% endfor %}
+    <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                注册新用户
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                已有账号？
+                <a href="{% url 'login' %}" class="font-medium text-blue-600 hover:text-blue-500">
+                    立即登录
+                </a>
+            </p>
         </div>
-      {% endfor %}
-      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        注册
-      </button>
-    </form>
-  </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <form class="space-y-6" method="post">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="rounded-md bg-red-50 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-red-800">
+                                        注册出错
+                                    </h3>
+                                    <div class="mt-2 text-sm text-red-700">
+                                        <ul class="list-disc pl-5 space-y-1">
+                                            {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                            用户名
+                        </label>
+
+                        <div class="mt-1 relative rounded-md shadow-sm">
+
+                            <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}"
+                                   class="appearance-none block w-full px-3 py-2 border {% if form.username.errors %}border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-300 focus:ring-blue-500 focus:border-blue-500{% endif %} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm"
+                                   placeholder="请输入用户名">
+                            {% if form.username.errors %}
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if form.username.errors %}
+                            <p class="mt-2 text-sm text-red-600">
+                                {% for error in form.username.errors %}{{ error }}{% endfor %}
+                            </p>
+                        {% else %}
+                            {#                    <p class="mt-2 text-sm text-gray-500">#}
+                            {#                        用户名长度不超过150个字符，只能包含字母、数字和 @/./+/-/_ 符号。#}
+                            {#                    </p>#}
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                            电子邮箱
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}"
+                                   class="appearance-none block w-full px-3 py-2 border {% if form.email.errors %}border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-300 focus:ring-blue-500 focus:border-blue-500{% endif %} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm"
+                                   placeholder="your.email@example.com">
+                            {% if form.email.errors %}
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if form.email.errors %}
+                            <p class="mt-2 text-sm text-red-600">
+                                {% for error in form.email.errors %}{{ error }}{% endfor %}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                            密码
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="password" name="{{ form.password1.name }}"
+                                   id="{{ form.password1.id_for_label }}"
+                                   class="appearance-none block w-full px-3 py-2 border {% if form.password1.errors %}border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-300 focus:ring-blue-500 focus:border-blue-500{% endif %} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm"
+                                   placeholder="请输入密码"
+                                   onkeyup="checkPasswordStrength(this.value)">
+                            {% if form.password1.errors %}
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div id="password-strength" class="mt-2">
+                            <div class="h-2 rounded-full bg-gray-200">
+                                <div id="strength-bar" class="h-2 rounded-full bg-red-500 transition-all duration-300"
+                                     style="width: 0%"></div>
+                            </div>
+                            <p id="strength-text" class="mt-1 text-sm text-gray-500">密码强度: 弱</p>
+                        </div>
+                        {% if form.password1.errors %}
+                            <p class="mt-2 text-sm text-red-600">
+                                {% for error in form.password1.errors %}{{ error }}{% endfor %}
+                            </p>
+                        {% endif %}
+                        {#                    <ul class="mt-2 text-sm text-gray-500 list-disc list-inside space-y-1">#}
+                        {#                        <li>密码长度至少为8个字符</li>#}
+                        {#                        <li>不能与个人信息相似</li>#}
+                        {#                        <li>不能使用常见密码</li>#}
+                        {#                        <li>不能全为数字</li>#}
+                        {#                    </ul>#}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                            确认密码
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="password" name="{{ form.password2.name }}"
+                                   id="{{ form.password2.id_for_label }}"
+                                   class="appearance-none block w-full px-3 py-2 border {% if form.password2.errors %}border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500{% else %}border-gray-300 focus:ring-blue-500 focus:border-blue-500{% endif %} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm"
+                                   placeholder="请再次输入密码">
+                            {% if form.password2.errors %}
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if form.password2.errors %}
+                            <p class="mt-2 text-sm text-red-600">
+                                {% for error in form.password2.errors %}{{ error }}{% endfor %}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            注册
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            const strengthBar = document.getElementById('strength-bar');
+            const strengthText = document.getElementById('strength-text');
+
+            // 长度检查
+            if (password.length >= 8) {
+                strength += 25;
+            }
+
+            // 包含数字
+            if (/\d/.test(password)) {
+                strength += 25;
+            }
+
+            // 包含小写字母
+            if (/[a-z]/.test(password)) {
+                strength += 25;
+            }
+
+            // 包含大写字母或特殊字符
+            if (/[A-Z]/.test(password) || /[^A-Za-z0-9]/.test(password)) {
+                strength += 25;
+            }
+
+            // 更新强度条
+            strengthBar.style.width = strength + '%';
+
+            // 更新颜色和文本
+            if (strength <= 25) {
+                strengthBar.className = 'h-2 rounded-full bg-red-500 transition-all duration-300';
+                strengthText.textContent = '密码强度: 弱';
+            } else if (strength <= 50) {
+                strengthBar.className = 'h-2 rounded-full bg-yellow-500 transition-all duration-300';
+                strengthText.textContent = '密码强度: 中';
+            } else if (strength <= 75) {
+                strengthBar.className = 'h-2 rounded-full bg-blue-500 transition-all duration-300';
+                strengthText.textContent = '密码强度: 良好';
+            } else {
+                strengthBar.className = 'h-2 rounded-full bg-green-500 transition-all duration-300';
+                strengthText.textContent = '密码强度: 强';
+            }
+        }
+    </script>
 {% endblock %}
 
