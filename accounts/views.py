@@ -11,6 +11,7 @@ from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthe
 import logging
 from django.utils.decorators import method_decorator
 from .decorators import user_management_required
+from django.db.models import Q
 
 logger = logging.getLogger(__name__)
 
@@ -321,6 +322,7 @@ def delete_role(request, role_id):
         messages.error(request, f'无法删除角色 {role.name}，因为它仍在使用中。')
     return redirect('manage_roles')
 
+
 @login_required
 def manage_permissions(request):
     if request.method == 'POST':
@@ -347,25 +349,74 @@ def delete_permission(request, permission_id):
     return redirect('manage_permissions')
 
 
+# @login_required
+# def assign_permission(request, role_id):
+#     role = get_object_or_404(Role, id=role_id)
+#     permissions = Permission.objects.all()
+#
+#     if request.method == 'POST':
+#         selected_permissions = request.POST.getlist('permissions')
+#         role.permissions.clear()
+#         role.permissions.add(*selected_permissions)
+#         messages.success(request, f'已成功更新角色 "{role.name}" 的权限。')
+#         return redirect('manage_roles')
+#
+#     current_permissions = role.permissions.all()
+#     context = {
+#         'role': role,
+#         'permissions': permissions,
+#         'current_permissions': current_permissions,
+#     }
+#     return render(request, 'accounts/assign_permission.html', context)
 @login_required
 def assign_permission(request, role_id):
-    role = get_object_or_404(Role, id=role_id)
-    permissions = Permission.objects.all()
+    try:
+        role = get_object_or_404(Role, id=role_id)
 
-    if request.method == 'POST':
-        selected_permissions = request.POST.getlist('permissions')
-        role.permissions.clear()
-        role.permissions.add(*selected_permissions)
-        messages.success(request, f'已成功更新角色 "{role.name}" 的权限。')
+        # 获取所有权限并按类别分组
+        permissions = Permission.objects.all().order_by('codename')
+
+        # 将权限分组
+        permission_groups = {
+            '用户管理': permissions.filter(codename__startswith='user_'),
+            '角色管理': permissions.filter(codename__startswith='role_'),
+            '权限管理': permissions.filter(codename__startswith='permission_'),
+            '系统管理': permissions.filter(Q(codename__startswith='system_') |
+                                           Q(codename__startswith='manage_')),
+        }
+
+        # 其他权限
+        used_permissions = set()
+        for perms in permission_groups.values():
+            used_permissions.update(perms.values_list('id', flat=True))
+
+        permission_groups['其他'] = permissions.exclude(id__in=used_permissions)
+
+        if request.method == 'POST':
+            try:
+                selected_permissions = request.POST.getlist('permissions')
+                role.permissions.set(Permission.objects.filter(id__in=selected_permissions))
+                messages.success(request, f'已成功更新角色 "{role.name}" 的权限。')
+                logger.info(f'Updated permissions for role {role.name} (ID: {role.id})')
+                return redirect('manage_roles')
+            except Exception as e:
+                logger.error(f'Error updating permissions for role {role.id}: {str(e)}')
+                messages.error(request, f'更新权限时出错：{str(e)}')
+
+        current_permissions = set(role.permissions.values_list('id', flat=True))
+
+        context = {
+            'role': role,
+            'permission_groups': permission_groups,
+            'current_permissions': current_permissions,
+        }
+
+        return render(request, 'accounts/assign_permission.html', context)
+
+    except Exception as e:
+        logger.error(f'Error in assign_permission view: {str(e)}')
+        messages.error(request, '加载权限时出错，请稍后重试。')
         return redirect('manage_roles')
-
-    current_permissions = role.permissions.all()
-    context = {
-        'role': role,
-        'permissions': permissions,
-        'current_permissions': current_permissions,
-    }
-    return render(request, 'accounts/assign_permission.html', context)
 
 
 @login_required
