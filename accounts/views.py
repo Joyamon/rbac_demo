@@ -1,7 +1,7 @@
 from django.db.models import ProtectedError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Role, Permission, UserRole, CustomUser
 from django.views.generic import ListView, DetailView, UpdateView
@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm
 import logging
 from django.utils.decorators import method_decorator
-from .decorators import user_management_required
+from .decorators import user_management_required, permission_required
 from django.db.models import Q
 
 logger = logging.getLogger(__name__)
@@ -20,12 +20,22 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, '注册成功！')
-            return redirect('home')  # 假设你有一个名为'home'的URL模式
+            try:
+                user = form.save()
+                # 自动登录新注册的用户
+                login(request, user)
+                messages.success(request, '注册成功！欢迎加入我们。')
+                return redirect('home')
+            except Exception as e:
+                logger.error(f'User registration failed: {str(e)}')
+                messages.error(request, '注册过程中出现错误，请稍后重试。')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{error}')
     else:
         form = CustomUserCreationForm()
+
     return render(request, 'accounts/register.html', {'form': form})
 
 
@@ -63,7 +73,7 @@ def register(request):
 
 
 @login_required
-@permission_required('accounts.edit_role', raise_exception=True)
+@permission_required('accounts.edit_role')
 def edit_role(request, role_id):
     role = get_object_or_404(Role, id=role_id)
     if request.method == 'POST':
@@ -162,6 +172,7 @@ class UserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     template_name = 'accounts/user_list.html'
     context_object_name = 'users'
     paginate_by = 10
+    permission_required('accounts.user_list')
 
     def test_func(self):
         return self.request.user.is_staff
@@ -178,6 +189,7 @@ class UserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     pk_url_kwarg = 'user_id'
     template_name = 'accounts/user_detail.html'
     context_object_name = 'user'
+    permission_required('accounts.user_detail')
 
     def test_func(self):
         return self.request.user.is_staff or self.request.user == self.get_object()
@@ -195,6 +207,7 @@ class UserEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = UserEditForm
     template_name = 'accounts/user_edit.html'
     context_object_name = 'user'
+    permission_required('accounts.user_edit')
 
     def get_success_url(self):
         return reverse_lazy('user_detail', kwargs={'user_id': self.object.pk})
@@ -349,25 +362,6 @@ def delete_permission(request, permission_id):
     return redirect('manage_permissions')
 
 
-# @login_required
-# def assign_permission(request, role_id):
-#     role = get_object_or_404(Role, id=role_id)
-#     permissions = Permission.objects.all()
-#
-#     if request.method == 'POST':
-#         selected_permissions = request.POST.getlist('permissions')
-#         role.permissions.clear()
-#         role.permissions.add(*selected_permissions)
-#         messages.success(request, f'已成功更新角色 "{role.name}" 的权限。')
-#         return redirect('manage_roles')
-#
-#     current_permissions = role.permissions.all()
-#     context = {
-#         'role': role,
-#         'permissions': permissions,
-#         'current_permissions': current_permissions,
-#     }
-#     return render(request, 'accounts/assign_permission.html', context)
 @login_required
 def assign_permission(request, role_id):
     try:
@@ -440,8 +434,9 @@ def assign_role(request, user_id):
     }
     return render(request, 'accounts/assign_role.html', context)
 
-# def has_permission(user, permission_codename):
-#     return UserRole.objects.filter(
-#         user=user,
-#         role__permissions__codename=permission_codename
-#     ).exists()
+
+def has_permission(user, permission_codename):
+    return UserRole.objects.filter(
+        user=user,
+        role__permissions__codename=permission_codename
+    ).exists()

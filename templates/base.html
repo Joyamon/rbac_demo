@@ -14,9 +14,9 @@
             {% if user.is_authenticated %}
                 {% if user.has_user_management_permission %}
                     <li><a href="{% url 'user_list' %}" class="hover:underline">用户管理</a></li>
+                    <li><a href="{% url 'manage_roles' %}" class="hover:underline">管理角色</a></li>
+                    <li><a href="{% url 'manage_permissions' %}" class="hover:underline">管理权限</a></li>
                 {% endif %}
-                <li><a href="{% url 'manage_roles' %}" class="hover:underline">管理角色</a></li>
-                <li><a href="{% url 'manage_permissions' %}" class="hover:underline">管理权限</a></li>
                 <li><a href="{% url 'logout' %}" class="hover:underline">登出</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}" class="hover:underline">登录</a></li>
@@ -28,7 +28,7 @@
 
 <main class="container mx-auto mt-8 p-4">
     {% if messages %}
-{#        消息弹窗5秒后自动消失#}
+        {#        消息弹窗5秒后自动消失#}
         <div class="messages mb-4" id="message-container">
             {% for message in messages %}
                 <div class="bg-{% if message.tags == 'error' %}red{% else %}green{% endif %}-100 border border-{% if message.tags == 'error' %}red{% else %}green{% endif %}-400 text-{% if message.tags == 'error' %}red{% else %}green{% endif %}-700 px-4 py-3 rounded relative"

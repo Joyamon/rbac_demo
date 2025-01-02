@@ -8,15 +8,74 @@ from django.contrib.auth import get_user_model, authenticate
 User = get_user_model()
 
 
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'is_active']
+
+
+class RoleForm(forms.ModelForm):
+    class Meta:
+        model = Role
+        fields = ['name', 'description']
+
+
+class PermissionForm(forms.ModelForm):
+    class Meta:
+        model = Permission
+        fields = ['name', 'codename', 'description']
+
+
 class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(
+        label=_('电子邮箱'),
+        max_length=254,
+        widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': '请输入电子邮箱'})
+    )
+
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('email',)
+        fields = ('username', 'email')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-input',
+            'placeholder': '请输入用户名'
+        })
+        self.fields['password1'].widget.attrs.update({
+            'class': 'form-input',
+            'placeholder': '请输入密码'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'form-input',
+            'placeholder': '请确认密码'
+        })
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if CustomUser.objects.filter(email=email).exists():
+            raise forms.ValidationError(_('该邮箱已被注册。'))
+        return email
 
 
 class CustomAuthenticationForm(AuthenticationForm):
-    username = forms.CharField(label=_("用户"), max_length=254)
-    password = forms.CharField(label=_("密码"), widget=forms.PasswordInput)
+    username = forms.CharField(
+        label=_('用户名'),
+        widget=forms.TextInput(attrs={
+            'class': 'form-input',
+            'placeholder': '请输入用户名',
+            'autocomplete': 'username'
+        })
+    )
+    password = forms.CharField(
+        label=_('密码'),
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'placeholder': '请输入密码',
+            'autocomplete': 'current-password'
+        })
+    )
 
     error_messages = {
         'invalid_login': _(
@@ -53,33 +112,3 @@ class CustomAuthenticationForm(AuthenticationForm):
                 self.confirm_login_allowed(self.user_cache)
 
         return self.cleaned_data
-
-
-# class RoleForm(forms.ModelForm):
-#     class Meta:
-#         model = Role
-#         fields = ['name', 'description']
-
-
-# class PermissionForm(forms.ModelForm):
-#     class Meta:
-#         model = Permission
-#         fields = ['name', 'codename']
-
-
-class UserEditForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'is_active']
-
-
-class RoleForm(forms.ModelForm):
-    class Meta:
-        model = Role
-        fields = ['name', 'description']
-
-
-class PermissionForm(forms.ModelForm):
-    class Meta:
-        model = Permission
-        fields = ['name', 'codename', 'description']
