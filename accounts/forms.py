@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm,PasswordChangeForm
 from .models import CustomUser, Role, Permission
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -112,3 +112,38 @@ class CustomAuthenticationForm(AuthenticationForm):
                 self.confirm_login_allowed(self.user_cache)
 
         return self.cleaned_data
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label=_("当前密码"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'autocomplete': 'current-password',
+            'class': 'form-input',
+            'placeholder': '请输入当前密码'
+        }),
+    )
+    new_password1 = forms.CharField(
+        label=_("新密码"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'autocomplete': 'new-password',
+            'class': 'form-input',
+            'placeholder': '请输入新密码'
+        }),
+    )
+    new_password2 = forms.CharField(
+        label=_("确认新密码"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'autocomplete': 'new-password',
+            'class': 'form-input',
+            'placeholder': '请再次输入新密码'
+        }),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.error_messages['password_mismatch'] = _("两次输入的新密码不匹配。")
+        self.error_messages['password_incorrect'] = _("您的旧密码输入不正确。请重新输入。")

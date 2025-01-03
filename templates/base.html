@@ -16,11 +16,23 @@
                     <li><a href="{% url 'user_list' %}" class="hover:underline">用户管理</a></li>
                     <li><a href="{% url 'manage_roles' %}" class="hover:underline">管理角色</a></li>
                     <li><a href="{% url 'manage_permissions' %}" class="hover:underline">管理权限</a></li>
+                    <li><a href="{% url 'change_password' %}" class="hover:underline">修改密码</a></li>
                 {% endif %}
                 <li><a href="{% url 'logout' %}" class="hover:underline">登出</a></li>
+
+                <li>
+                    <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-blue-100">
+                        <span class="text-sm font-small leading-none text-blue-900">
+                            <a href="{% url 'user_detail' user.id %}"
+                               class="hover:underline">{{ user.username|first|upper }}</a>
+                        </span>
+                    </span>
+                </li>
+
             {% else %}
                 <li><a href="{% url 'login' %}" class="hover:underline">登录</a></li>
                 <li><a href="{% url 'register' %}" class="hover:underline">注册</a></li>
+
             {% endif %}
         </ul>
     </nav>

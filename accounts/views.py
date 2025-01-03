@@ -1,13 +1,17 @@
+from django.contrib.auth.forms import PasswordChangeForm
+from django.core.exceptions import PermissionDenied
 from django.db.models import ProtectedError
+from django.forms import forms
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Role, Permission, UserRole, CustomUser
 from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm
+from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, \
+    CustomPasswordChangeForm
 import logging
 from django.utils.decorators import method_decorator
 from .decorators import user_management_required, permission_required
@@ -440,3 +444,25 @@ def has_permission(user, permission_codename):
         user=user,
         role__permissions__codename=permission_codename
     ).exists()
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # 更新会话，避免用户被登出
+            messages.success(request, '您的密码已成功更新！')
+            return redirect('profile')
+        else:
+            messages.error(request, '请更正下面的错误。')
+    else:
+        form = CustomPasswordChangeForm(request.user)
+    return render(request, 'accounts/change_password.html', {
+        'form': form
+    })
+
+
+def profile(request):
+    return render(request, 'accounts/profile.html')
