@@ -186,21 +186,43 @@ class UserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return super().handle_no_permission()
 
 
-@method_decorator([login_required, user_management_required], name='dispatch')
-class UserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+@method_decorator(login_required, name='dispatch')
+class UserDetailView(DetailView):
     model = CustomUser
-    pk = 'user_id'
-    pk_url_kwarg = 'user_id'
     template_name = 'accounts/user_detail.html'
-    context_object_name = 'user'
-    permission_required('accounts.user_detail')
+    context_object_name = 'user_obj'
 
-    def test_func(self):
-        return self.request.user.is_staff or self.request.user == self.get_object()
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if not self.request.user.has_permission('view_user'):
+            logger.warning(
+                f"User {self.request.user.username} attempted to access user detail "
+                f"view for user {obj.username} without permission"
+            )
+            raise PermissionDenied("You don't have permission to view this user.")
+        return obj
 
-    def handle_no_permission(self):
-        messages.error(self.request, "您没有权限访问此页面。")
-        return super().handle_no_permission()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_obj = self.object
+
+        # Get user's roles and permissions
+        context['roles'] = [ur.role for ur in user_obj.user_roles.select_related('role')]
+        context['permissions'] = user_obj.get_all_permissions()
+
+        # Add permission check results to context
+        context['can_edit'] = self.request.user.has_permission('user_edit')
+        context['can_delete'] = self.request.user.has_permission('user_delete')
+
+        logger.debug(
+            f"User detail view accessed - "
+            f"Target user: {user_obj.username}, "
+            f"Viewer: {self.request.user.username}, "
+            f"Can edit: {context['can_edit']}, "
+            f"Can delete: {context['can_delete']}"
+        )
+
+        return context
 
 
 @method_decorator([login_required, user_management_required], name='dispatch')
