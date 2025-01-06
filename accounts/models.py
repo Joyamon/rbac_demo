@@ -100,12 +100,7 @@ class UserRole(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='user_roles')
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
 
-    def clean(self):
-        if UserRole.objects.filter(user=self.user, role=self.role).exists():
-            raise ValidationError('该用户已被分配此角色')
-
     def save(self, *args, **kwargs):
-        self.full_clean()
         super().save(*args, **kwargs)
         logger.info(f"UserRole assigned: {self.user.username} -> {self.role.name}")
 
@@ -115,15 +110,3 @@ class UserRole(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.role.name}"
-
-
-class RolePermission(models.Model):
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ('role', 'permission')
-
-    def __str__(self):
-        return f"{self.role.name} - {self.permission.name}"
-

@@ -170,9 +170,19 @@ class UserRoleForm(forms.ModelForm):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        role = cleaned_data.get('role')
+        if self.user and role:
+            if UserRole.objects.filter(user=self.user, role=role).exists():
+                raise forms.ValidationError('该用户已被分配此角色')
+        return cleaned_data
+
     def save(self, commit=True):
         user_role = super().save(commit=False)
         user_role.user = self.user
         if commit:
             user_role.save()
         return user_role
+
+
