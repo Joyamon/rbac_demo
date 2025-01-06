@@ -36,7 +36,7 @@
 
 <main class="container mx-auto mt-8 p-4">
     {% if messages %}
-        <div class="messages mb-4">
+        <div class="messages mb-4" id="message-container">
             {% for message in messages %}
                 <div class="bg-{% if message.tags == 'error' %}red{% else %}green{% endif %}-100 border border-{% if message.tags == 'error' %}red{% else %}green{% endif %}-400 text-{% if message.tags == 'error' %}red{% else %}green{% endif %}-700 px-4 py-3 rounded relative"
                      role="alert">
@@ -51,8 +51,18 @@
 </main>
 
 <footer class="bg-gray-200 text-center p-4 mt-8">
-    <p>&copy; 2023 Django RBAC 项目. 保留所有权利。</p>
+    <p>&copy; 2025 Django RBAC 项目. 保留所有权利。</p>
 </footer>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const messageContainer = document.getElementById('message-container');
+        if (messageContainer) {
+            setTimeout(() => {
+                messageContainer.style.display = 'none';
+            }, 3000);
+        }
+    });
+</script>
 </html>
 

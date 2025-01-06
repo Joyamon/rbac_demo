@@ -266,21 +266,6 @@ def assign_role(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     roles = Role.objects.all()
 
-    if request.method == 'POST':
-        selected_roles = request.POST.getlist('roles')
-        UserRole.objects.filter(user=user).delete()
-        for role_id in selected_roles:
-            UserRole.objects.create(user=user, role_id=role_id)
-        messages.success(request, f'已成功更新用户 "{user.username}" 的角色。')
-        return redirect('user_list')
-
-    current_roles = user.user_roles.all().values_list('role_id', flat=True)
-    context = {
-        'user': user,
-        'roles': roles,
-        'current_roles': current_roles,
-    }
-    return render(request, 'accounts/assign_role.html', context)
 
 
 def has_permission(user, permission_codename):
@@ -424,7 +409,7 @@ def user_edit(request, user_id):
         if form.is_valid():
             form.save()
             messages.success(request, '用户信息已更新。')
-            return redirect('user_detail', user_id=user.id)
+            return redirect('user_list')
     else:
         form = UserEditForm(instance=user)
         return render(request, 'accounts/user_edit.html', {'form': form})
