@@ -11,7 +11,7 @@ from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, \
-    CustomPasswordChangeForm
+    CustomPasswordChangeForm, UserRoleForm
 import logging
 from django.utils.decorators import method_decorator
 from .decorators import user_management_required, permission_required
@@ -170,59 +170,59 @@ def user_delete(request, user_id):
     return render(request, 'accounts/user_delete.html', {'user': user})
 
 
-@method_decorator([login_required, user_management_required], name='dispatch')
-class UserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
-    model = CustomUser
-    template_name = 'accounts/user_list.html'
-    context_object_name = 'users'
-    paginate_by = 10
-    permission_required('accounts.view_user_list')
-
-    def test_func(self):
-        return self.request.user.is_staff
-
-    def handle_no_permission(self):
-        messages.error(self.request, "您没有权限访问此页面。")
-        return super().handle_no_permission()
-
-
-@method_decorator(login_required, name='dispatch')
-class UserDetailView(DetailView):
-    model = CustomUser
-    template_name = 'accounts/user_detail.html'
-    context_object_name = 'user_obj'
-
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-        if not self.request.user.has_permission('view_user'):
-            logger.warning(
-                f"User {self.request.user.username} attempted to access user detail "
-                f"view for user {obj.username} without permission"
-            )
-            raise PermissionDenied("You don't have permission to view this user.")
-        return obj
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user_obj = self.object
-
-        # Get user's roles and permissions
-        context['roles'] = [ur.role for ur in user_obj.user_roles.select_related('role')]
-        context['permissions'] = user_obj.get_all_permissions()
-
-        # Add permission check results to context
-        context['can_edit'] = self.request.user.has_permission('user_edit')
-        context['can_delete'] = self.request.user.has_permission('user_delete')
-
-        logger.debug(
-            f"User detail view accessed - "
-            f"Target user: {user_obj.username}, "
-            f"Viewer: {self.request.user.username}, "
-            f"Can edit: {context['can_edit']}, "
-            f"Can delete: {context['can_delete']}"
-        )
-
-        return context
+# @method_decorator([login_required, user_management_required], name='dispatch')
+# class UserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+#     model = CustomUser
+#     template_name = 'accounts/user_list.html'
+#     context_object_name = 'users'
+#     paginate_by = 10
+#     permission_required('accounts.view_user_list')
+#
+#     def test_func(self):
+#         return self.request.user.is_staff
+#
+#     def handle_no_permission(self):
+#         messages.error(self.request, "您没有权限访问此页面。")
+#         return super().handle_no_permission()
+#
+#
+# @method_decorator(login_required, name='dispatch')
+# class UserDetailView(DetailView):
+#     model = CustomUser
+#     template_name = 'accounts/user_detail.html'
+#     context_object_name = 'user_obj'
+#
+#     def get_object(self, queryset=None):
+#         obj = super().get_object(queryset)
+#         if not self.request.user.has_permission('view_user'):
+#             logger.warning(
+#                 f"User {self.request.user.username} attempted to access user detail "
+#                 f"view for user {obj.username} without permission"
+#             )
+#             raise PermissionDenied("You don't have permission to view this user.")
+#         return obj
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         user_obj = self.object
+#
+#         # Get user's roles and permissions
+#         context['roles'] = [ur.role for ur in user_obj.user_roles.select_related('role')]
+#         context['permissions'] = user_obj.get_all_permissions()
+#
+#         # Add permission check results to context
+#         context['can_edit'] = self.request.user.has_permission('user_edit')
+#         context['can_delete'] = self.request.user.has_permission('user_delete')
+#
+#         logger.debug(
+#             f"User detail view accessed - "
+#             f"Target user: {user_obj.username}, "
+#             f"Viewer: {self.request.user.username}, "
+#             f"Can edit: {context['can_edit']}, "
+#             f"Can delete: {context['can_delete']}"
+#         )
+#
+#         return context
 
 
 @method_decorator([login_required, user_management_required], name='dispatch')
@@ -337,13 +337,13 @@ def user_login(request):
 
 
 @login_required
-@permission_required('accounts.manage_role')
+@permission_required('accounts.manage_roles')
 def manage_roles(request):
     if request.method == 'POST':
         form = RoleForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, '角色创建成功。')
+            role = form.save()
+            messages.success(request, f'角色 "{role.name}" 创建成功。')
             return redirect('manage_roles')
     else:
         form = RoleForm()
@@ -364,13 +364,13 @@ def delete_role(request, role_id):
 
 
 @login_required
-@permission_required('accounts.manage_permission')
+@permission_required('accounts.manage_permissions')
 def manage_permissions(request):
     if request.method == 'POST':
         form = PermissionForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, '权限创建成功。')
+            permission = form.save()
+            messages.success(request, f'权限 "{permission.name}" 创建成功。')
             return redirect('manage_permissions')
     else:
         form = PermissionForm()
@@ -490,3 +490,62 @@ def change_password(request):
 
 def profile(request):
     return render(request, 'accounts/profile.html')
+
+
+@login_required
+@permission_required('accounts.manage_roles')
+def assign_permissions_to_role(request, role_id):
+    role = get_object_or_404(Role, id=role_id)
+    if request.method == 'POST':
+        selected_permissions = request.POST.getlist('permissions')
+        role.permissions.set(selected_permissions)
+        messages.success(request, f'已成功更新角色 "{role.name}" 的权限。')
+        return redirect('manage_roles')
+
+    all_permissions = Permission.objects.all()
+    role_permissions = role.permissions.all()
+    return render(request, 'accounts/assign_permissions_to_role.html', {
+        'role': role,
+        'all_permissions': all_permissions,
+        'role_permissions': role_permissions
+    })
+
+
+@login_required
+@permission_required('accounts.manage_roles')
+def assign_role_to_user(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    if request.method == 'POST':
+        form = UserRoleForm(request.POST, user=user)
+        if form.is_valid():
+            user_role = form.save()
+            messages.success(request, f'已成功将角色 "{user_role.role.name}" 分配给用户 "{user.username}"。')
+            return redirect('user_detail', user_id=user.id)
+    else:
+        form = UserRoleForm(user=user)
+
+    user_roles = user.user_roles.all()
+    return render(request, 'accounts/assign_role_to_user.html', {
+        'form': form,
+        'user': user,
+        'user_roles': user_roles
+    })
+
+
+@login_required
+@permission_required('accounts.view_user_list')
+def user_list(request):
+    users = CustomUser.objects.all()
+    return render(request, 'accounts/user_list.html', {'users': users})
+
+@login_required
+@permission_required('accounts.view_user')
+def user_detail(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    user_roles = user.user_roles.all()
+    user_permissions = user.get_all_permissions()
+    return render(request, 'accounts/user_detail.html', {
+        'user': user,
+        'user_roles': user_roles,
+        'user_permissions': user_permissions
+    })

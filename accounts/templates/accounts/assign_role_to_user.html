@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}为用户分配角色 - Django RBAC 项目{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">为用户 "{{ user.username }}" 分配角色</h1>
+
+    <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.role.id_for_label }}">
+                选择角色
+            </label>
+            {{ form.role }}
+        </div>
+        <div class="flex items-center justify-between">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                分配角色
+            </button>
+            <a href="{% url 'user_detail' user.id %}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                返回用户详情
+            </a>
+        </div>
+    </form>
+
+    <div class="mt-8">
+        <h2 class="text-xl font-semibold mb-4">当前角色</h2>
+        <ul class="list-disc list-inside">
+            {% for user_role in user_roles %}
+            <li>{{ user_role.role.name }}</li>
+            {% empty %}
+            <li>该用户当前没有分配角色</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
+

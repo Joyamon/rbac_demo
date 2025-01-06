@@ -7,71 +7,47 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-<header class="bg-blue-600 text-white p-4">
-    <nav class="container mx-auto flex justify-between items-center">
-        <a href="{% url 'home' %}" class="text-2xl font-bold">RBAC 系统</a>
-        <ul class="flex space-x-4">
-            {% if user.is_authenticated %}
-                {% if perms.accounts.view_user_list %}
-                    <li><a href="{% url 'user_list' %}" class="hover:underline">用户管理</a></li>
+    <header class="bg-blue-600 text-white p-4">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold">RBAC 系统</a>
+            <ul class="flex space-x-4">
+                {% if user.is_authenticated %}
+                    {% if perms.accounts.view_user_list %}
+                        <li><a href="{% url 'user_list' %}" class="hover:underline">用户管理</a></li>
+                    {% endif %}
+                    {% if perms.accounts.manage_roles %}
+                        <li><a href="{% url 'manage_roles' %}" class="hover:underline">角色管理</a></li>
+                    {% endif %}
+                    {% if perms.accounts.manage_permissions %}
+                        <li><a href="{% url 'manage_permissions' %}" class="hover:underline">权限管理</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'logout' %}" class="hover:underline">登出</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}" class="hover:underline">登录</a></li>
+                    <li><a href="{% url 'register' %}" class="hover:underline">注册</a></li>
                 {% endif %}
-                {% if perms.accounts.manage_roles %}
-                <li><a href="{% url 'manage_roles' %}" class="hover:underline">管理角色</a></li>
-                {% endif %}
-                {% if perms.accounts.manage_permissions %}
-                <li><a href="{% url 'manage_permissions' %}" class="hover:underline">管理权限</a></li>
-                {% endif %}
-                <li><a href="{% url 'change_password' %}" class="hover:underline">修改密码</a></li>
-                <li><a href="{% url 'logout' %}" class="hover:underline">登出</a></li>
+            </ul>
+        </nav>
+    </header>
 
-                <li>
-                    <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-blue-100">
-                        <span class="text-sm font-small leading-none text-blue-900">
-                            <a href="{% url 'user_detail' user.id %}"
-                               class="hover:underline">{{ user.username|first|upper }}</a>
-                        </span>
-                    </span>
-                </li>
+    <main class="container mx-auto mt-8 p-4">
+        {% if messages %}
+            <div class="messages mb-4">
+                {% for message in messages %}
+                    <div class="bg-{% if message.tags == 'error' %}red{% else %}green{% endif %}-100 border border-{% if message.tags == 'error' %}red{% else %}green{% endif %}-400 text-{% if message.tags == 'error' %}red{% else %}green{% endif %}-700 px-4 py-3 rounded relative" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-            {% else %}
-                <li><a href="{% url 'login' %}" class="hover:underline">登录</a></li>
-                <li><a href="{% url 'register' %}" class="hover:underline">注册</a></li>
+        {% block content %}
+        {% endblock %}
+    </main>
 
-            {% endif %}
-        </ul>
-    </nav>
-</header>
-
-<main class="container mx-auto mt-8 p-4">
-    {% if messages %}
-        {#        消息弹窗5秒后自动消失#}
-        <div class="messages mb-4" id="message-container">
-            {% for message in messages %}
-                <div class="bg-{% if message.tags == 'error' %}red{% else %}green{% endif %}-100 border border-{% if message.tags == 'error' %}red{% else %}green{% endif %}-400 text-{% if message.tags == 'error' %}red{% else %}green{% endif %}-700 px-4 py-3 rounded relative"
-                     role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    {% block content %}
-    {% endblock %}
-</main>
-
-<footer class="bg-gray-200 text-center p-4 mt-8">
-    <p>&copy; 2023 Django RBAC 项目. 保留所有权利。</p>
-</footer>
+    <footer class="bg-gray-200 text-center p-4 mt-8">
+        <p>&copy; 2023 Django RBAC 项目. 保留所有权利。</p>
+    </footer>
 </body>
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const messageContainer = document.getElementById('message-container');
-        if (messageContainer) {
-            setTimeout(() => {
-                messageContainer.style.display = 'none';
-            }, 3000);
-        }
-    });
-</script>
 </html>
 

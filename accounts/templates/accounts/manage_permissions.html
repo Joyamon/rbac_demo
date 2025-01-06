@@ -3,136 +3,60 @@
 {% block title %}管理权限 - Django RBAC 项目{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-50 py-6">
-    <div class="min-h-screen bg-gray-50 py-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- 页面标题 -->
-        <div class="mb-6">
-            <h2 class="text-2xl font-bold text-gray-900">权限管理</h2>
-            <p class="mt-1 text-sm text-gray-500">创建和管理系统权限</p>
-        </div>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">管理权限</h1>
 
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <!-- 创建权限表单 -->
-            <div class="bg-white shadow rounded-lg">
-                <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        创建新权限
-                    </h3>
-                </div>
-                <div class="px-4 py-5 sm:p-6">
-                    <form method="post" class="space-y-6">
-                        {% csrf_token %}
-                        <div>
-                            <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                                权限名称
-                            </label>
-                            <div class="mt-1">
-                                <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
-                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    placeholder="输入权限名称">
-                                {% if form.name.errors %}
-                                <p class="mt-2 text-sm text-red-600">
-                                    {{ form.name.errors.0 }}
-                                </p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="{{ form.codename.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                                权限代码
-                            </label>
-                            <div class="mt-1">
-                                <input type="text" name="{{ form.codename.name }}" id="{{ form.codename.id_for_label }}"
-                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    placeholder="输入权限代码">
-                                {% if form.codename.errors %}
-                                <p class="mt-2 text-sm text-red-600">
-                                    {{ form.codename.errors.0 }}
-                                </p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                                权限描述
-                            </label>
-                            <div class="mt-1">
-                                <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" rows="3"
-                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    placeholder="输入权限描述"></textarea>
-                                {% if form.description.errors %}
-                                <p class="mt-2 text-sm text-red-600">
-                                    {{ form.description.errors.0 }}
-                                </p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end">
-                            <button type="submit"
-                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                创建权限
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">创建新权限</h2>
+        <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.name.id_for_label }}">
+                    权限名称
+                </label>
+                {{ form.name }}
             </div>
-
-            <!-- 现有权限列表 -->
-            <div class="bg-white shadow rounded-lg">
-                <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        现有权限
-                    </h3>
-                </div>
-                <div class="px-4 py-5 sm:p-6">
-                    {% if permissions %}
-                    <div class="flow-root">
-                        <ul role="list" class="-my-5 divide-y divide-gray-200">
-                            {% for permission in permissions %}
-                            <li class="py-4">
-                                <div class="flex items-center space-x-4">
-                                    <div class="flex-shrink-0">
-                                        <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-green-100">
-                                            <span class="text-sm font-medium leading-none text-green-700">
-                                                {{ permission.name|first|upper }}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-900 truncate">
-                                            {{ permission.name }}
-                                        </p>
-                                        <p class="text-sm text-gray-500 truncate">
-                                            代码: {{ permission.codename }}
-                                        </p>
-                                        <p class="text-sm text-gray-500 truncate">
-                                            {{ permission.description|default:"暂无描述" }}
-                                        </p>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-
-                                        <button type="button"
-                                            class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                            onclick="if(confirm('确定要删除此角色吗？')) location.href='{% url 'delete_permission' permission.id %}'">
-                                            删除
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% else %}
-                    <div class="text-center py-4">
-                        <p class="text-sm text-gray-500">暂无权限数据</p>
-                    </div>
-                    {% endif %}
-                </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.codename.id_for_label }}">
+                    代码名称
+                </label>
+                {{ form.codename }}
             </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.description.id_for_label }}">
+                    描述
+                </label>
+                {{ form.description }}
+            </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    创建权限
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <h2 class="text-xl font-semibold mb-4">现有权限</h2>
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left">名称</th>
+                        <th class="text-left">代码名称</th>
+                        <th class="text-left">描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for permission in permissions %}
+                    <tr>
+                        <td class="py-2">{{ permission.name }}</td>
+                        <td class="py-2">{{ permission.codename }}</td>
+                        <td class="py-2">{{ permission.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -3,119 +3,56 @@
 {% block title %}管理角色 - Django RBAC 项目{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-50 py-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- 页面标题 -->
-        <div class="mb-6">
-            <h2 class="text-2xl font-bold text-gray-900">角色管理</h2>
-            <p class="mt-1 text-sm text-gray-500">创建和管理系统角色</p>
-        </div>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">管理角色</h1>
 
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <!-- 创建角色表单 -->
-            <div class="bg-white shadow rounded-lg">
-                <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        创建新角色
-                    </h3>
-                </div>
-                <div class="px-4 py-5 sm:p-6">
-                    <form method="post" class="space-y-6">
-                        {% csrf_token %}
-                        <div>
-                            <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                                角色名称
-                            </label>
-                            <div class="mt-1">
-                                <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
-                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    placeholder="输入角色名称">
-                                {% if form.name.errors %}
-                                <p class="mt-2 text-sm text-red-600">
-                                    {{ form.name.errors.0 }}
-                                </p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                                角色描述
-                            </label>
-                            <div class="mt-1">
-                                <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" rows="3"
-                                    class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                    placeholder="输入角色描述"></textarea>
-                                {% if form.description.errors %}
-                                <p class="mt-2 text-sm text-red-600">
-                                    {{ form.description.errors.0 }}
-                                </p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end">
-                            <button type="submit"
-                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                创建角色
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">创建新角色</h2>
+        <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.name.id_for_label }}">
+                    角色名称
+                </label>
+                {{ form.name }}
             </div>
-
-            <!-- 现有角色列表 -->
-            <div class="bg-white shadow rounded-lg">
-                <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        现有角色
-                    </h3>
-                </div>
-                <div class="px-4 py-5 sm:p-6">
-                    {% if roles %}
-                    <div class="flow-root">
-                        <ul role="list" class="-my-5 divide-y divide-gray-200">
-                            {% for role in roles %}
-                            <li class="py-4">
-                                <div class="flex items-center space-x-4">
-                                    <div class="flex-shrink-0">
-                                        <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-blue-100">
-                                            <span class="text-sm font-medium leading-none text-blue-700">
-                                                {{ role.name|first|upper }}
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-sm font-medium text-gray-900 truncate">
-                                            {{ role.name }}
-                                        </p>
-                                        <p class="text-sm text-gray-500 truncate">
-                                            {{ role.description|default:"暂无描述" }}
-                                        </p>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <a href="{% url 'assign_permission' role.id %}"
-                                            class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                            分配权限
-                                        </a>
-                                        <button type="button"
-                                            class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                                            onclick="if(confirm('确定要删除此角色吗？')) location.href='{% url 'delete_role' role.id %}'">
-                                            删除
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% else %}
-                    <div class="text-center py-4">
-                        <p class="text-sm text-gray-500">暂无角色数据</p>
-                    </div>
-                    {% endif %}
-                </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.description.id_for_label }}">
+                    描述
+                </label>
+                {{ form.description }}
             </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    创建角色
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <h2 class="text-xl font-semibold mb-4">现有角色</h2>
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left">名称</th>
+                        <th class="text-left">描述</th>
+                        <th class="text-left">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for role in roles %}
+                    <tr>
+                        <td class="py-2">{{ role.name }}</td>
+                        <td class="py-2">{{ role.description }}</td>
+                        <td class="py-2">
+                            <a href="{% url 'assign_permissions_to_role' role.id %}" class="text-blue-500 hover:text-blue-800">分配权限</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

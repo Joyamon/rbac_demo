@@ -1,5 +1,5 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm,PasswordChangeForm
-from .models import CustomUser, Role, Permission
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from .models import CustomUser, Role, Permission, UserRole
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
@@ -14,16 +14,16 @@ class UserEditForm(forms.ModelForm):
         fields = ['username', 'email', 'is_active']
 
 
-class RoleForm(forms.ModelForm):
-    class Meta:
-        model = Role
-        fields = ['name', 'description']
+# class RoleForm(forms.ModelForm):
+#     class Meta:
+#         model = Role
+#         fields = ['name', 'description']
 
 
-class PermissionForm(forms.ModelForm):
-    class Meta:
-        model = Permission
-        fields = ['name', 'codename', 'description']
+# class PermissionForm(forms.ModelForm):
+#     class Meta:
+#         model = Permission
+#         fields = ['name', 'codename', 'description']
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -147,3 +147,32 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         super().__init__(*args, **kwargs)
         self.error_messages['password_mismatch'] = _("两次输入的新密码不匹配。")
         self.error_messages['password_incorrect'] = _("您的旧密码输入不正确。请重新输入。")
+
+
+class RoleForm(forms.ModelForm):
+    class Meta:
+        model = Role
+        fields = ['name', 'description']
+
+
+class PermissionForm(forms.ModelForm):
+    class Meta:
+        model = Permission
+        fields = ['name', 'codename', 'description']
+
+
+class UserRoleForm(forms.ModelForm):
+    class Meta:
+        model = UserRole
+        fields = ['role']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        user_role = super().save(commit=False)
+        user_role.user = self.user
+        if commit:
+            user_role.save()
+        return user_role

@@ -3,57 +3,32 @@
 {% block title %}用户列表 - Django RBAC 项目{% endblock %}
 
 {% block content %}
-    <div class="min-h-screen bg-gray-50 py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">用户列表</h2>
-                <p class="mt-1 text-sm text-gray-500">创建和管理用户</p>
-            </div>
-            <table class="min-w-full bg-white">
-                <thead>
-                <tr>
-                    <th class="py-2 px-4 border-b" style="text-align: left">用户名</th>
-                    <th class="py-2 px-4 border-b" style="text-align: left">邮箱</th>
-                    <th class="py-2 px-4 border-b" style="text-align: left">状态</th>
-                    <th class="py-2 px-4 border-b" style="text-align: left">操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user in page_obj %}
-                    <tr class="hover:bg-gray-100">
-                        <td class="py-2 px-4 border-b">{{ user.username }}</td>
-                        <td class="py-2 px-4 border-b">{{ user.email }}</td>
-                        <td class="py-2 px-4 border-b">
-                            <span class="{% if user.is_active %}text-green-500{% else %}text-red-500{% endif %} ml-2">
-                                {% if user.is_active %}激活{% else %}禁用{% endif %}
-                            </span>
-                        </td>
-                        <td class="py-2 px-4 border-b">
-                            <a href="{% url 'user_detail' user.id %}" class="text-blue-500 hover:underline">查看</a>
-                            <a href="{% url 'user_edit' user.id %}" class="text-green-500 hover:underline ml-2">编辑</a>
-                            <a href="{% url 'user_delete' user.id %}" class="text-red-500 hover:underline ml-2"
-                               onclick="return confirm('确定要删除此用户吗？')">删除</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">用户列表</h1>
 
-            <div class="mt-4">
-    <span class="mr-2">
-      第 {{ page_obj.number }} 页，共 {{ page_obj.paginator.num_pages }} 页
-    </span>
-                {% if page_obj.has_previous %}
-                    <a href="?page=1" class="text-blue-500 hover:underline">&laquo; 首页</a>
-                    <a href="?page={{ page_obj.previous_page_number }}" class="text-blue-500 hover:underline">上一页</a>
-                {% endif %}
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="text-blue-500 hover:underline">下一页</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}" class="text-blue-500 hover:underline">末页
-                        &raquo;</a>
-                {% endif %}
-            </div>
-        </div>
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th class="text-left">用户名</th>
+                    <th class="text-left">邮箱</th>
+                    <th class="text-left">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="py-2">{{ user.username }}</td>
+                    <td class="py-2">{{ user.email }}</td>
+                    <td class="py-2">
+                        <a href="{% url 'user_detail' user.id %}" class="text-blue-500 hover:text-blue-800">查看详情</a>
+                        <a href="{% url 'assign_role_to_user' user.id %}" class="text-blue-500 hover:text-blue-800 ml-2">分配角色</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+</div>
 {% endblock %}
 
