@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from .models import CustomUser, Role, Permission, UserRole
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -12,18 +12,6 @@ class UserEditForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'is_active']
-
-
-# class RoleForm(forms.ModelForm):
-#     class Meta:
-#         model = Role
-#         fields = ['name', 'description']
-
-
-# class PermissionForm(forms.ModelForm):
-#     class Meta:
-#         model = Permission
-#         fields = ['name', 'codename', 'description']
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -184,5 +172,3 @@ class UserRoleForm(forms.ModelForm):
         if commit:
             user_role.save()
         return user_role
-
-

@@ -22,15 +22,3 @@ class RBACMiddleware(MiddlewareMixin):
                 f"{[role.name for role in request.user.roles]} and "
                 f"permissions: {request.user.all_permissions}"
             )
-
-# class RBACMiddleware(MiddlewareMixin):
-#     def process_request(self, request):
-#         if hasattr(request, 'user') and request.user.is_authenticated:
-#             request.user.all_permissions = set(
-#                 request.user.get_all_permissions().values_list('codename', flat=True)
-#             )
-#             logger.debug(
-#                 f"User {request.user.username} loaded with permissions: "
-#                 f"{request.user.all_permissions}"
-#             )
-
