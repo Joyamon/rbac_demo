@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import ProtectedError
 from django.forms import forms
 from django.shortcuts import render, redirect, get_object_or_404
@@ -535,8 +536,41 @@ def assign_role_to_user(request, user_id):
 @login_required
 @permission_required('accounts.view_user_list')
 def user_list(request):
-    users = CustomUser.objects.all()
-    return render(request, 'accounts/user_list.html', {'users': users})
+    users = CustomUser.objects.all().order_by('username')
+    page = request.GET.get('page', 1)
+    per_page = request.GET.get('per_page', 10)  # 新增：每页显示数量选择
+
+    paginator = Paginator(users, per_page)
+
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+
+    # 计算要显示的页码范围
+    index = users.number - 1
+    max_index = len(paginator.page_range)
+    start_index = index - 2 if index >= 2 else 0
+    end_index = index + 3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range)[start_index:end_index]
+
+    # 计算当前页的用户范围
+    start_user = (users.number - 1) * paginator.per_page + 1
+    end_user = start_user + len(users) - 1
+
+    context = {
+        'users': users,
+        'page_range': page_range,
+        'total_users': paginator.count,
+        'start_user': start_user,
+        'end_user': end_user,
+        'per_page': int(per_page),
+    }
+
+    return render(request, 'accounts/user_list.html', context)
+
 
 @login_required
 @permission_required('accounts.view_user')
@@ -549,3 +583,16 @@ def user_detail(request, user_id):
         'user_roles': user_roles,
         'user_permissions': user_permissions
     })
+
+@login_required
+def user_edit(request, user_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '用户信息已更新。')
+            return redirect('user_detail', user_id=user.id)
+    else:
+        form = UserEditForm(instance=user)
+        return render(request, 'accounts/user_edit.html', {'form': form})
