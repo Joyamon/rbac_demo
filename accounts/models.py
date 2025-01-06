@@ -91,12 +91,6 @@ class CustomUser(AbstractUser):
                 self.has_permission('view_user')
         )
 
-    def has_role_management_permission(self):
-        """检查用户是否有角色管理权限"""
-        return (
-                self.is_superuser or
-                self.has_permission('role_manage')
-        )
 
     def has_permission_management_permission(self):
         """检查用户是否有权限管理权限"""
@@ -176,3 +170,11 @@ class UserRole(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.role.name}"
+
+
+class RolePermission(models.Model):
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('role', 'permission')

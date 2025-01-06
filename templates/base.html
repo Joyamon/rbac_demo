@@ -12,12 +12,16 @@
         <a href="{% url 'home' %}" class="text-2xl font-bold">RBAC 系统</a>
         <ul class="flex space-x-4">
             {% if user.is_authenticated %}
-                {% if user.has_user_management_permission %}
+                {% if perms.accounts.view_user_list %}
                     <li><a href="{% url 'user_list' %}" class="hover:underline">用户管理</a></li>
                 {% endif %}
+                {% if perms.accounts.manage_roles %}
                 <li><a href="{% url 'manage_roles' %}" class="hover:underline">管理角色</a></li>
-                    <li><a href="{% url 'manage_permissions' %}" class="hover:underline">管理权限</a></li>
-                    <li><a href="{% url 'change_password' %}" class="hover:underline">修改密码</a></li>
+                {% endif %}
+                {% if perms.accounts.manage_permissions %}
+                <li><a href="{% url 'manage_permissions' %}" class="hover:underline">管理权限</a></li>
+                {% endif %}
+                <li><a href="{% url 'change_password' %}" class="hover:underline">修改密码</a></li>
                 <li><a href="{% url 'logout' %}" class="hover:underline">登出</a></li>
 
                 <li>

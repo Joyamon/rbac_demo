@@ -176,7 +176,7 @@ class UserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     template_name = 'accounts/user_list.html'
     context_object_name = 'users'
     paginate_by = 10
-    permission_required('accounts.user_list')
+    permission_required('accounts.view_user_list')
 
     def test_func(self):
         return self.request.user.is_staff
@@ -337,6 +337,7 @@ def user_login(request):
 
 
 @login_required
+@permission_required('accounts.manage_role')
 def manage_roles(request):
     if request.method == 'POST':
         form = RoleForm(request.POST)
@@ -363,6 +364,7 @@ def delete_role(request, role_id):
 
 
 @login_required
+@permission_required('accounts.manage_permission')
 def manage_permissions(request):
     if request.method == 'POST':
         form = PermissionForm(request.POST)
