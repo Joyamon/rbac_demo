@@ -4,36 +4,14 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">管理角色</h1>
+{#    <h1 class="text-2xl font-bold mb-6">管理角色</h1>#}
 
-    <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4">创建新角色</h2>
-        <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            {% csrf_token %}
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.name.id_for_label }}">
-                    角色名称
-                </label>
-                {{ form.name }}
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.description.id_for_label }}">
-                    描述
-                </label>
-                {{ form.description }}
-            </div>
-            <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                    创建角色
-                </button>
-            </div>
-        </form>
-    </div>
+
 
     <div>
         <h2 class="text-xl font-semibold mb-4">现有角色</h2>
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <table class="w-full">
+            <table class="w-full ">
                 <thead>
                     <tr>
                         <th class="text-left">名称</th>
@@ -44,9 +22,9 @@
                 <tbody>
                     {% for role in roles %}
                     <tr>
-                        <td class="py-2">{{ role.name }}</td>
-                        <td class="py-2">{{ role.description }}</td>
-                        <td class="py-2">
+                        <td class="py-2 border-t">{{ role.name }}</td>
+                        <td class="py-2 border-t">{{ role.description }}</td>
+                        <td class="py-2 border-t">
                             <a href="{% url 'assign_permissions_to_role' role.id %}" class="text-blue-500 hover:text-blue-800">分配权限</a>
                         </td>
                     </tr>
@@ -54,6 +32,29 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">创建新角色</h2>
+        <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            {% csrf_token %}
+            <div class="mb-4 ">
+                <label class="block text-gray-700 text-sm font-bold mb-2 " for="{{ form.name.id_for_label }}">
+                    角色名称
+                </label>
+                {{ form.name }}
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.description.id_for_label }}">
+                    描述
+                </label>
+                {{ form.description }}
+            </div>
+            <div class="flex items-center justify-between ">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    创建角色
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

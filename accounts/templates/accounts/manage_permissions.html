@@ -4,8 +4,31 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">管理权限</h1>
+{#    <h1 class="text-2xl font-bold mb-6">管理权限</h1>#}
 
+    <div>
+        <h2 class="text-xl font-semibold mb-4">现有权限</h2>
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left">名称</th>
+                        <th class="text-left">代码名称</th>
+                        <th class="text-left">描述</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for permission in permissions %}
+                    <tr>
+                        <td class="py-2 border-t">{{ permission.name }}</td>
+                        <td class="py-2 border-t">{{ permission.codename }}</td>
+                        <td class="py-2 border-t">{{ permission.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="mb-8">
         <h2 class="text-xl font-semibold mb-4">创建新权限</h2>
         <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -34,30 +57,6 @@
                 </button>
             </div>
         </form>
-    </div>
-
-    <div>
-        <h2 class="text-xl font-semibold mb-4">现有权限</h2>
-        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <table class="w-full">
-                <thead>
-                    <tr>
-                        <th class="text-left">名称</th>
-                        <th class="text-left">代码名称</th>
-                        <th class="text-left">描述</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for permission in permissions %}
-                    <tr>
-                        <td class="py-2">{{ permission.name }}</td>
-                        <td class="py-2">{{ permission.codename }}</td>
-                        <td class="py-2">{{ permission.description }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>
 {% endblock %}
