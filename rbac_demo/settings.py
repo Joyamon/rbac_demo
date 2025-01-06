@@ -125,7 +125,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # 确保包含默认的认证后端
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'accounts.backends.CustomAuthBackend',
+    # 'accounts.backends.CustomAuthBackend',
 ]
 LOGGING = {
     'version': 1,

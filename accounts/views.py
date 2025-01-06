@@ -162,6 +162,7 @@ def user_logout(request):
 
 
 @login_required
+@permission_required('delete_user')
 def user_delete(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     if request.method == 'POST':
@@ -365,7 +366,7 @@ def delete_role(request, role_id):
 
 
 @login_required
-@permission_required('accounts.manage_permissions')
+# @permission_required('accounts.manage_permissions')
 def manage_permissions(request):
     if request.method == 'POST':
         form = PermissionForm(request.POST)
@@ -401,6 +402,7 @@ def assign_permission(request, role_id):
 
         # 将权限分组
         permission_groups = {
+            # 'home权限': permissions.filter(codename__startswith='home_'),
             '用户管理': permissions.filter(codename__startswith='user_'),
             '角色管理': permissions.filter(codename__startswith='role_'),
             '权限管理': permissions.filter(codename__startswith='permission_'),
@@ -494,7 +496,7 @@ def profile(request):
 
 
 @login_required
-@permission_required('accounts.manage_roles')
+# @permission_required('accounts.manage_roles')
 def assign_permissions_to_role(request, role_id):
     role = get_object_or_404(Role, id=role_id)
     if request.method == 'POST':
@@ -513,9 +515,9 @@ def assign_permissions_to_role(request, role_id):
 
 
 @login_required
-@permission_required('accounts.manage_roles')
 def assign_role_to_user(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
+    can_manage_roles = has_permission(request.user, 'manage_roles')
     if request.method == 'POST':
         form = UserRoleForm(request.POST, user=user)
         if form.is_valid():
@@ -529,16 +531,17 @@ def assign_role_to_user(request, user_id):
     return render(request, 'accounts/assign_role_to_user.html', {
         'form': form,
         'user': user,
-        'user_roles': user_roles
+        'user_roles': user_roles,
+        'can_manage_roles': can_manage_roles
     })
 
 
 @login_required
-@permission_required('accounts.view_user_list')
+# @permission_required('accounts.manage_roles')
 def user_list(request):
     users = CustomUser.objects.all().order_by('username')
     page = request.GET.get('page', 1)
-    per_page = request.GET.get('per_page', 10)  # 新增：每页显示数量选择
+    per_page = request.GET.get('per_page', 10)
 
     paginator = Paginator(users, per_page)
 
@@ -548,8 +551,7 @@ def user_list(request):
         users = paginator.page(1)
     except EmptyPage:
         users = paginator.page(paginator.num_pages)
-
-    # 计算要显示的页码范围
+        # 计算要显示的页码范围
     index = users.number - 1
     max_index = len(paginator.page_range)
     start_index = index - 2 if index >= 2 else 0
@@ -560,6 +562,12 @@ def user_list(request):
     start_user = (users.number - 1) * paginator.per_page + 1
     end_user = start_user + len(users) - 1
 
+    # 检查用户是否具有编辑和删除权限和分配权限
+    can_detail = request.user.has_permission('view_user_detail')
+    can_edit = request.user.has_permission('edit_user')
+    can_delete = request.user.has_permission('delete_user')
+    can_assign = request.user.has_permission('assign_role')
+
     context = {
         'users': users,
         'page_range': page_range,
@@ -567,13 +575,21 @@ def user_list(request):
         'start_user': start_user,
         'end_user': end_user,
         'per_page': int(per_page),
+        'can_edit': can_edit,
+        'can_delete': can_delete,
+        'can_assign': can_assign,
+        'can_detail': can_detail,
     }
+
+    logger.debug(
+        f"User {request.user.username} accessing user list with "
+        f"edit_permission: {can_edit}, delete_permission: {can_delete}"
+    )
 
     return render(request, 'accounts/user_list.html', context)
 
 
 @login_required
-@permission_required('accounts.view_user')
 def user_detail(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     user_roles = user.user_roles.all()
@@ -583,6 +599,7 @@ def user_detail(request, user_id):
         'user_roles': user_roles,
         'user_permissions': user_permissions
     })
+
 
 @login_required
 def user_edit(request, user_id):

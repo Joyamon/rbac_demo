@@ -39,14 +39,34 @@ class CustomUser(AbstractUser):
 
         return self.user_roles.filter(role__permissions__codename=perm).exists()
 
+    def has_permission(self, codename):
+        """检查用户是否具有特定权限"""
+        if self.is_superuser:
+            return True
+
+        # 获取用户所有角色的权限
+        user_permissions = set()
+        for user_role in self.user_roles.select_related('role').prefetch_related('role__permissions'):
+            user_permissions.update(
+                perm.codename for perm in user_role.role.permissions.all()
+            )
+
+        has_perm = codename in user_permissions
+        logger.debug(
+            f"User {self.username} permission check for {codename}: {has_perm}"
+            f" (permissions: {user_permissions})"
+        )
+        return has_perm
+
     def get_all_permissions(self):
+        """获取用户的所有权限"""
         if self.is_superuser:
             return Permission.objects.all()
 
-        if hasattr(self, 'all_permissions'):
-            return Permission.objects.filter(codename__in=self.all_permissions)
-
-        return Permission.objects.filter(roles__userrole__user=self).distinct()
+        permissions = set()
+        for user_role in self.user_roles.select_related('role').prefetch_related('role__permissions'):
+            permissions.update(user_role.role.permissions.all())
+        return permissions
 
     def __str__(self):
         return self.username

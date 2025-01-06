@@ -13,6 +13,11 @@ class Command(BaseCommand):
                 'description': '允许查看系统中的用户列表'
             },
             {
+                'name': '查看用户详情',
+                'codename': 'view_user_detail',
+                'description': '允许查看用户的详细信息'
+            },
+            {
                 'name': '创建用户',
                 'codename': 'create_user',
                 'description': '允许创建新用户'
@@ -46,7 +51,7 @@ class Command(BaseCommand):
                 'name': '系统设置',
                 'codename': 'manage_settings',
                 'description': '允许修改系统设置'
-            },
+            }
         ]
 
         for perm_data in default_permissions:
