@@ -1,15 +1,19 @@
+import time
+
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import ProtectedError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Role, Permission, UserRole, CustomUser
+from .models import Role, Permission, UserRole, CustomUser, UserActivity
 from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, \
     CustomPasswordChangeForm, UserRoleForm
 import logging
 from .decorators import permission_required
 from django.db.models import Q
+
+from .signals import user_edited, user_deleted
 
 logger = logging.getLogger(__name__)
 
@@ -65,6 +69,7 @@ def user_delete(request, user_id):
     if request.method == 'POST':
         user.delete()
         messages.success(request, f'用户 {user.username} 已被删除。')
+        user_deleted.send(sender=UserActivity, user=request.user, instance=user)  # 发送信号,删除用户
         return redirect('user_list')
     return render(request, 'accounts/user_delete.html', {'user': user})
 
@@ -112,20 +117,17 @@ def home(request):
         action for action in quick_actions
         if request.user.has_perm(action['permission'])
     ]
+    list_data = []
+    for activity in UserActivity.objects.all().order_by('-timestamp'):
+        list_data.append({
+            'description': activity.activity_type,
+            'timestamp': activity.timestamp.strftime('%Y-%m-%d %H:%M'),
+            'user': activity.user.username if activity.user else '系统',
+            'type': activity.activity_type
+        })
 
     # 获取最近活动
-    recent_activities = [
-        {
-            'description': '新用户注册',
-            'timestamp': '2024-01-01 10:00',
-            'type': 'user'
-        },
-        {
-            'description': '角色更新',
-            'timestamp': '2024-01-01 09:30',
-            'type': 'role'
-        }
-    ]
+    recent_activities = list_data
 
     context = {
         'total_users': total_users,
@@ -265,7 +267,6 @@ def assign_permission(request, role_id):
 def assign_role(request, user_id):
     user = get_object_or_404(CustomUser, id=user_id)
     roles = Role.objects.all()
-
 
 
 def has_permission(user, permission_codename):
@@ -408,6 +409,7 @@ def user_edit(request, user_id):
         form = UserEditForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            user_edited.send(sender=UserActivity, user=request.user, instance=user)  # 发送信号,记录用户编辑操作
             messages.success(request, '用户信息已更新。')
             return redirect('user_list')
     else:
