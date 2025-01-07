@@ -18,7 +18,7 @@
                         <div class="ml-5 w-0 flex-1">
                             <dl>
                                 <dt class="text-sm font-medium text-gray-500 truncate">总用户数</dt>
-                                <dd class="text-lg font-medium text-gray-900">{{ total_users }}</dd>
+                                <dd class="text-lg font-medium text-gray-900"><a href="{% url 'user_list'  %}">{{ total_users }}</a></dd>
                             </dl>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <div class="ml-5 w-0 flex-1">
                             <dl>
                                 <dt class="text-sm font-medium text-gray-500 truncate">角色数量</dt>
-                                <dd class="text-lg font-medium text-gray-900">{{ total_roles }}</dd>
+                                <dd class="text-lg font-medium text-gray-900"><a href="{% url 'manage_roles'  %}">{{ total_roles }}</a></dd>
                             </dl>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <div class="ml-5 w-0 flex-1">
                             <dl>
                                 <dt class="text-sm font-medium text-gray-500 truncate">权限数量</dt>
-                                <dd class="text-lg font-medium text-gray-900">{{ total_permissions }}</dd>
+                                <dd class="text-lg font-medium text-gray-900"><a href="{% url 'manage_permissions'  %}">{{ total_permissions }}</a></dd>
                             </dl>
                         </div>
                     </div>
