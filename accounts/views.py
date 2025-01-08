@@ -13,7 +13,7 @@ import logging
 from .decorators import permission_required
 from django.db.models import Q
 
-from .signals import user_edited, user_deleted
+from .signals import user_edited, user_deleted, user_assigned_role, add_role
 
 logger = logging.getLogger(__name__)
 
@@ -165,6 +165,7 @@ def manage_roles(request):
         if form.is_valid():
             role = form.save()
             messages.success(request, f'角色 "{role.name}" 创建成功。')
+            add_role.send(sender=UserActivity, user=request.user, instance=role)  # 发送信号,添加角色
             return redirect('manage_roles')
     else:
         form = RoleForm()
@@ -331,6 +332,7 @@ def assign_role_to_user(request, user_id):
             if form.is_valid():
                 user_role = form.save()
                 messages.success(request, f'已成功将角色 "{user_role.role.name}" 分配给用户 "{user.username}"。')
+                user_assigned_role.send(sender=UserActivity, user=request.user, instance=user)  # 发送信号,记录用户授权
                 return redirect('user_list')
     else:
         form = UserRoleForm(user=user)
