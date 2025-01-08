@@ -322,10 +322,16 @@ def assign_role_to_user(request, user_id):
     can_manage_roles = has_permission(request.user, 'manage_roles')
     if request.method == 'POST':
         form = UserRoleForm(request.POST, user=user)
-        if form.is_valid():
-            user_role = form.save()
-            messages.success(request, f'已成功将角色 "{user_role.role.name}" 分配给用户 "{user.username}"。')
-            return redirect('user_detail', user_id=user.id)
+        # 检查用户是否有角色
+        if user.user_roles.exists():
+            messages.info(request,
+                          f'"{user.username}"已分配了"{UserRole.objects.get(user_id=user_id).role.name}"角色')
+            return redirect('user_list')
+        else:
+            if form.is_valid():
+                user_role = form.save()
+                messages.success(request, f'已成功将角色 "{user_role.role.name}" 分配给用户 "{user.username}"。')
+                return redirect('user_list')
     else:
         form = UserRoleForm(user=user)
 
