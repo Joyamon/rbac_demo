@@ -136,6 +136,7 @@ AUTHENTICATION_BACKENDS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+
     'formatters': {
         'verbose': {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
@@ -146,8 +147,10 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'debug.log',
+            'filename': 'log/debug.log',
+            'encoding': 'utf-8',
             'formatter': 'verbose',
+
         },
         'console': {
             'level': 'DEBUG',

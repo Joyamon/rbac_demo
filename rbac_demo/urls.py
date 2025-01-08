@@ -43,6 +43,7 @@ urlpatterns = [
     # path('accounts/users/<int:user_id>/edit/', account_views.UserEditView.as_view(), name='user_edit'),
     path('accounts/users/<int:user_id>/delete/', account_views.user_delete, name='user_delete'),
     path('accounts/users/change-password/', account_views.change_password, name='change_password'),
-    path('accounts/users/profile/', account_views.profile, name='profile')
+    path('accounts/users/profile/', account_views.profile, name='profile'),
+    path('accounts/users/system-logs/', account_views.view_system_logs, name='view_system_logs'),
 
 ]

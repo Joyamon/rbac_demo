@@ -1,5 +1,7 @@
+import os
 import time
 
+from django.conf import settings
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import ProtectedError
 from django.shortcuts import render, redirect, get_object_or_404
@@ -350,7 +352,7 @@ def assign_role_to_user(request, user_id):
 def user_list(request):
     users = CustomUser.objects.all().order_by('username')
     page = request.GET.get('page', 1)
-    per_page = request.GET.get('per_page', 10)
+    per_page = request.GET.get('per_page', 1)
 
     paginator = Paginator(users, per_page)
 
@@ -423,3 +425,44 @@ def user_edit(request, user_id):
     else:
         form = UserEditForm(instance=user)
         return render(request, 'accounts/user_edit.html', {'form': form})
+
+
+@login_required
+@permission_required('view_system_logs')
+def view_system_logs(request):
+    log_entries = []
+    path = os.path.join(settings.BASE_DIR, r'log/debug.log')
+    with open(path, 'r', encoding='utf-8') as log_file:
+        log_entries = log_file.readlines()
+    log_entries.reverse()  # 最新的日志在前面
+
+    # page = request.GET.get('page', 1)
+    # per_page = request.GET.get('per_page', 1)
+    #
+    # paginator = Paginator(logs, per_page)
+    #
+    # try:
+    #     logs = paginator.page(page)
+    # except PageNotAnInteger:
+    #     logs = paginator.page(1)
+    # except EmptyPage:
+    #     logs = paginator.page(paginator.num_pages)
+    #     # 计算要显示的页码范围
+    # index = logs.number - 1
+    # max_index = len(paginator.page_range)
+    # start_index = index - 2 if index >= 2 else 0
+    # end_index = index + 3 if index <= max_index - 3 else max_index
+    # page_range = list(paginator.page_range)[start_index:end_index]
+    #
+    # start_logs = (logs.number - 1) * paginator.per_page + 1
+    # end_logs = start_logs + len(logs) - 1
+
+    paginator = Paginator(log_entries, 5)  # 每页显示10条日志
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "page_obj":page_obj
+
+    }
+    return render(request, 'accounts/system_logs.html', context)

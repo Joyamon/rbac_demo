@@ -26,6 +26,7 @@
                 {#                    {% endif %}#}
                 {#                    {% if perms.accounts.manage_permissions %}#}
                 <li><a href="{% url 'manage_permissions' %}" class="hover:underline">权限管理</a></li>
+                <li><a href="{% url 'view_system_logs' %}" class="hover:underline">系统日志</a></li>
                 <li><a href="{% url 'user_detail' user.id %}">{{ user.username }}</a></li>
                 {#                    {% endif %}#}
                 <li><a href="{% url 'logout' %}" id="logout-link" class="hover:underline">登出</a></li>

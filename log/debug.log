@@ -1,0 +1,402 @@
+DEBUG 2025-01-08 16:42:48,380 middleware 24900 68156 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_list', 'create_user', 'assign_permissions', 'edit_user', 'home', 'manage_roles', 'manage_settings', 'delete_user', 'view_user_detail', 'view_system_logs'}
+DEBUG 2025-01-08 16:42:48,384 views 24900 68156 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:42:49,982 middleware 24900 68156 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_list', 'create_user', 'assign_permissions', 'edit_user', 'home', 'manage_roles', 'manage_settings', 'delete_user', 'view_user_detail', 'view_system_logs'}
+INFO 2025-01-08 16:42:49,983 decorators 24900 68156 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:43:46,626 middleware 82024 24348 User admin loaded with roles: ['超级管理员'] and permissions: {'assign_permissions', 'create_user', 'view_user_list', 'edit_user', 'home', 'view_system_logs', 'delete_user', 'view_user_detail', 'manage_roles', 'manage_settings'}
+INFO 2025-01-08 16:43:46,626 decorators 82024 24348 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:43:56,792 middleware 31012 42860 User admin loaded with roles: ['超级管理员'] and permissions: {'view_system_logs', 'view_user_detail', 'home', 'view_user_list', 'delete_user', 'manage_roles', 'edit_user', 'assign_permissions', 'manage_settings', 'create_user'}
+INFO 2025-01-08 16:43:56,793 decorators 31012 42860 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:45:12,594 middleware 79184 19152 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'edit_user', 'view_system_logs', 'view_user_list', 'delete_user', 'manage_settings', 'view_user_detail', 'home', 'create_user', 'assign_permissions'}
+INFO 2025-01-08 16:45:12,595 decorators 79184 19152 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:45:49,612 middleware 79184 19152 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'edit_user', 'view_system_logs', 'view_user_list', 'delete_user', 'manage_settings', 'view_user_detail', 'home', 'create_user', 'assign_permissions'}
+INFO 2025-01-08 16:45:49,612 decorators 79184 19152 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:45:51,443 middleware 79184 19152 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'edit_user', 'view_system_logs', 'view_user_list', 'delete_user', 'manage_settings', 'view_user_detail', 'home', 'create_user', 'assign_permissions'}
+INFO 2025-01-08 16:45:51,443 decorators 79184 19152 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:45:53,451 middleware 79184 19152 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'edit_user', 'view_system_logs', 'view_user_list', 'delete_user', 'manage_settings', 'view_user_detail', 'home', 'create_user', 'assign_permissions'}
+INFO 2025-01-08 16:45:53,451 decorators 79184 19152 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:47:34,592 middleware 79184 19152 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'edit_user', 'view_system_logs', 'view_user_list', 'delete_user', 'manage_settings', 'view_user_detail', 'home', 'create_user', 'assign_permissions'}
+INFO 2025-01-08 16:47:34,593 decorators 79184 19152 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:48:13,961 middleware 5376 81156 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'view_user_detail', 'delete_user', 'edit_user', 'home', 'manage_roles', 'view_system_logs', 'manage_settings', 'assign_permissions', 'view_user_list'}
+INFO 2025-01-08 16:48:13,963 decorators 5376 81156 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:48:15,651 middleware 5376 81156 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'view_user_detail', 'delete_user', 'edit_user', 'home', 'manage_roles', 'view_system_logs', 'manage_settings', 'assign_permissions', 'view_user_list'}
+INFO 2025-01-08 16:48:15,652 decorators 5376 81156 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:48:18,555 middleware 5376 81156 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'view_user_detail', 'delete_user', 'edit_user', 'home', 'manage_roles', 'view_system_logs', 'manage_settings', 'assign_permissions', 'view_user_list'}
+INFO 2025-01-08 16:48:18,556 decorators 5376 81156 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:48:20,841 middleware 5376 81156 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'view_user_detail', 'delete_user', 'edit_user', 'home', 'manage_roles', 'view_system_logs', 'manage_settings', 'assign_permissions', 'view_user_list'}
+INFO 2025-01-08 16:48:20,842 decorators 5376 81156 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:49:48,956 middleware 50140 70080 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_system_logs', 'home', 'manage_settings', 'edit_user', 'assign_permissions', 'view_user_list', 'create_user'}
+DEBUG 2025-01-08 16:49:48,957 views 50140 70080 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:50:45,976 middleware 50140 70080 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_system_logs', 'home', 'manage_settings', 'edit_user', 'assign_permissions', 'view_user_list', 'create_user'}
+DEBUG 2025-01-08 16:50:45,978 views 50140 70080 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:50:46,581 middleware 50140 70080 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_system_logs', 'home', 'manage_settings', 'edit_user', 'assign_permissions', 'view_user_list', 'create_user'}
+DEBUG 2025-01-08 16:50:46,582 views 50140 70080 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:50:46,797 middleware 50140 70080 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_system_logs', 'home', 'manage_settings', 'edit_user', 'assign_permissions', 'view_user_list', 'create_user'}
+DEBUG 2025-01-08 16:50:46,799 views 50140 70080 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:50:49,089 middleware 50140 70080 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_system_logs', 'home', 'manage_settings', 'edit_user', 'assign_permissions', 'view_user_list', 'create_user'}
+DEBUG 2025-01-08 16:50:49,091 views 50140 70080 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:51:04,816 middleware 50140 70080 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_system_logs', 'home', 'manage_settings', 'edit_user', 'assign_permissions', 'view_user_list', 'create_user'}
+DEBUG 2025-01-08 16:51:04,818 views 50140 70080 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:51:05,310 middleware 50140 70080 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_system_logs', 'home', 'manage_settings', 'edit_user', 'assign_permissions', 'view_user_list', 'create_user'}
+DEBUG 2025-01-08 16:51:05,311 views 50140 70080 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:51:17,656 middleware 50140 70080 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_system_logs', 'home', 'manage_settings', 'edit_user', 'assign_permissions', 'view_user_list', 'create_user'}
+DEBUG 2025-01-08 16:51:17,661 views 50140 70080 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:56:32,504 middleware 38388 88240 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_user_list', 'view_system_logs', 'home', 'manage_settings', 'create_user', 'assign_permissions', 'edit_user'}
+DEBUG 2025-01-08 16:56:32,505 views 38388 88240 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:56:33,262 middleware 38388 88240 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_user_list', 'view_system_logs', 'home', 'manage_settings', 'create_user', 'assign_permissions', 'edit_user'}
+DEBUG 2025-01-08 16:56:33,263 views 38388 88240 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:56:33,538 middleware 38388 88240 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_user_list', 'view_system_logs', 'home', 'manage_settings', 'create_user', 'assign_permissions', 'edit_user'}
+DEBUG 2025-01-08 16:56:33,540 views 38388 88240 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:56:35,186 middleware 38388 88240 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_user_list', 'view_system_logs', 'home', 'manage_settings', 'create_user', 'assign_permissions', 'edit_user'}
+DEBUG 2025-01-08 16:56:35,187 views 38388 88240 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:56:37,741 middleware 38388 88240 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_user_list', 'view_system_logs', 'home', 'manage_settings', 'create_user', 'assign_permissions', 'edit_user'}
+INFO 2025-01-08 16:56:37,741 decorators 38388 88240 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:56:41,200 middleware 38388 88240 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_user_list', 'view_system_logs', 'home', 'manage_settings', 'create_user', 'assign_permissions', 'edit_user'}
+INFO 2025-01-08 16:56:41,200 decorators 38388 88240 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:56:43,016 middleware 38388 88240 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_user_list', 'view_system_logs', 'home', 'manage_settings', 'create_user', 'assign_permissions', 'edit_user'}
+INFO 2025-01-08 16:56:43,017 decorators 38388 88240 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 16:56:45,726 middleware 38388 88240 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'delete_user', 'view_user_detail', 'view_user_list', 'view_system_logs', 'home', 'manage_settings', 'create_user', 'assign_permissions', 'edit_user'}
+DEBUG 2025-01-08 16:56:45,728 views 38388 88240 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:58:17,487 middleware 43592 82384 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'view_user_list', 'manage_settings', 'view_system_logs', 'delete_user', 'home', 'edit_user', 'manage_roles', 'view_user_detail', 'assign_permissions'}
+DEBUG 2025-01-08 16:58:17,488 views 43592 82384 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:58:47,744 middleware 46828 68884 User admin loaded with roles: ['超级管理员'] and permissions: {'view_system_logs', 'view_user_list', 'delete_user', 'create_user', 'assign_permissions', 'view_user_detail', 'manage_roles', 'home', 'manage_settings', 'edit_user'}
+DEBUG 2025-01-08 16:58:47,745 views 46828 68884 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:59:44,521 middleware 47240 47288 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'view_system_logs', 'view_user_detail', 'delete_user', 'view_user_list', 'create_user', 'edit_user', 'assign_permissions', 'home', 'manage_settings'}
+DEBUG 2025-01-08 16:59:44,523 views 47240 47288 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:59:45,207 middleware 47240 47288 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'view_system_logs', 'view_user_detail', 'delete_user', 'view_user_list', 'create_user', 'edit_user', 'assign_permissions', 'home', 'manage_settings'}
+DEBUG 2025-01-08 16:59:45,208 views 47240 47288 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:59:45,437 middleware 47240 47288 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'view_system_logs', 'view_user_detail', 'delete_user', 'view_user_list', 'create_user', 'edit_user', 'assign_permissions', 'home', 'manage_settings'}
+DEBUG 2025-01-08 16:59:45,438 views 47240 47288 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:59:59,642 middleware 77804 55336 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'manage_settings', 'view_system_logs', 'create_user', 'edit_user', 'home', 'assign_permissions', 'view_user_list', 'delete_user', 'view_user_detail'}
+DEBUG 2025-01-08 16:59:59,643 views 77804 55336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 16:59:59,868 middleware 77804 55336 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'manage_settings', 'view_system_logs', 'create_user', 'edit_user', 'home', 'assign_permissions', 'view_user_list', 'delete_user', 'view_user_detail'}
+DEBUG 2025-01-08 16:59:59,869 views 77804 55336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:00:00,088 middleware 77804 55336 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'manage_settings', 'view_system_logs', 'create_user', 'edit_user', 'home', 'assign_permissions', 'view_user_list', 'delete_user', 'view_user_detail'}
+DEBUG 2025-01-08 17:00:00,089 views 77804 55336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:00:00,316 middleware 77804 55336 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'manage_settings', 'view_system_logs', 'create_user', 'edit_user', 'home', 'assign_permissions', 'view_user_list', 'delete_user', 'view_user_detail'}
+DEBUG 2025-01-08 17:00:00,317 views 77804 55336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:00:02,277 middleware 77804 55336 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'manage_settings', 'view_system_logs', 'create_user', 'edit_user', 'home', 'assign_permissions', 'view_user_list', 'delete_user', 'view_user_detail'}
+DEBUG 2025-01-08 17:00:02,277 views 77804 55336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:00:04,420 middleware 77804 55336 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'manage_settings', 'view_system_logs', 'create_user', 'edit_user', 'home', 'assign_permissions', 'view_user_list', 'delete_user', 'view_user_detail'}
+INFO 2025-01-08 17:00:04,420 decorators 77804 55336 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:00:07,855 middleware 77804 55336 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'manage_settings', 'view_system_logs', 'create_user', 'edit_user', 'home', 'assign_permissions', 'view_user_list', 'delete_user', 'view_user_detail'}
+DEBUG 2025-01-08 17:00:07,856 views 77804 55336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:37,748 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:37,750 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:39,149 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:39,150 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:40,451 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:40,453 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:42,137 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:42,138 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:47,325 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:47,327 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:47,969 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:47,971 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:49,810 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:49,811 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:51,520 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:51,522 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:01:52,683 middleware 17188 20692 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'create_user', 'manage_settings', 'edit_user', 'view_system_logs', 'delete_user', 'view_user_detail', 'view_user_list', 'assign_permissions', 'manage_roles'}
+DEBUG 2025-01-08 17:01:52,684 views 17188 20692 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:02:12,753 middleware 59884 47388 User admin loaded with roles: ['超级管理员'] and permissions: {'delete_user', 'edit_user', 'create_user', 'manage_settings', 'view_system_logs', 'manage_roles', 'view_user_detail', 'view_user_list', 'assign_permissions', 'home'}
+DEBUG 2025-01-08 17:02:12,754 views 59884 47388 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:02:13,044 middleware 59884 47388 User admin loaded with roles: ['超级管理员'] and permissions: {'delete_user', 'edit_user', 'create_user', 'manage_settings', 'view_system_logs', 'manage_roles', 'view_user_detail', 'view_user_list', 'assign_permissions', 'home'}
+DEBUG 2025-01-08 17:02:13,045 views 59884 47388 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:02:28,384 middleware 52588 61336 User admin loaded with roles: ['超级管理员'] and permissions: {'delete_user', 'manage_settings', 'edit_user', 'view_user_detail', 'create_user', 'home', 'view_system_logs', 'manage_roles', 'view_user_list', 'assign_permissions'}
+DEBUG 2025-01-08 17:02:28,385 views 52588 61336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:02:29,767 middleware 52588 61336 User admin loaded with roles: ['超级管理员'] and permissions: {'delete_user', 'manage_settings', 'edit_user', 'view_user_detail', 'create_user', 'home', 'view_system_logs', 'manage_roles', 'view_user_list', 'assign_permissions'}
+DEBUG 2025-01-08 17:02:29,768 views 52588 61336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:02:31,116 middleware 52588 61336 User admin loaded with roles: ['超级管理员'] and permissions: {'delete_user', 'manage_settings', 'edit_user', 'view_user_detail', 'create_user', 'home', 'view_system_logs', 'manage_roles', 'view_user_list', 'assign_permissions'}
+DEBUG 2025-01-08 17:02:31,117 views 52588 61336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:02:32,244 middleware 52588 61336 User admin loaded with roles: ['超级管理员'] and permissions: {'delete_user', 'manage_settings', 'edit_user', 'view_user_detail', 'create_user', 'home', 'view_system_logs', 'manage_roles', 'view_user_list', 'assign_permissions'}
+DEBUG 2025-01-08 17:02:32,245 views 52588 61336 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:02:56,042 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+DEBUG 2025-01-08 17:02:56,043 views 63532 48688 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:02:58,101 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:02:58,101 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:03:02,019 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:03:02,019 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:03:04,520 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:03:04,520 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:03:54,129 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:03:54,130 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:04:44,387 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+DEBUG 2025-01-08 17:04:46,370 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:04:46,371 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:05:56,285 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:05:56,286 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:07:43,679 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:07:43,679 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:09:21,985 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:09:21,985 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:09:32,668 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:09:32,668 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:09:42,544 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:09:42,544 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:09:58,544 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:09:58,545 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:10:32,533 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:10:32,533 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:11:13,294 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:11:13,295 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:11:45,428 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:11:45,428 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:12:02,005 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:12:02,006 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:12:32,566 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:12:32,566 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:12:57,501 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:12:57,502 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:13:24,823 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:13:24,824 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:13:39,798 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:13:39,799 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:13:41,790 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:13:41,791 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:13:43,651 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:13:43,651 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:14:32,916 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:14:32,916 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:14:43,306 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:14:43,307 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:15:26,347 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:15:26,348 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:18:18,987 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:18:18,987 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:18:34,366 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:18:34,366 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:18:45,564 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:18:45,565 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:18:56,193 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:18:56,194 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:19:45,383 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:19:45,385 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:20:28,879 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:20:28,879 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:20:43,218 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:20:43,218 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:20:46,490 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:20:46,491 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:21:11,141 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:21:11,141 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:22:10,405 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:22:10,406 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:22:11,875 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:22:11,875 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:22:52,486 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:22:52,487 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:22:53,503 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:22:53,503 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:23:12,158 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:23:12,158 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:23:19,102 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:23:19,103 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:23:44,687 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:23:44,687 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:24:07,746 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:24:07,746 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:24:21,429 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:24:21,429 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:24:27,202 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:24:27,203 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:24:33,526 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:24:33,526 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:25:35,438 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:25:35,438 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:26:53,224 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:26:53,225 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:27:30,961 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:27:30,962 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:27:52,164 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:27:52,165 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:28:13,953 middleware 63532 48688 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'edit_user', 'view_user_list', 'manage_settings', 'create_user', 'home', 'manage_roles', 'assign_permissions', 'delete_user', 'view_system_logs'}
+INFO 2025-01-08 17:28:13,953 decorators 63532 48688 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:30:25,536 middleware 61248 83408 User admin loaded with roles: ['超级管理员'] and permissions: {'edit_user', 'view_user_list', 'delete_user', 'manage_roles', 'assign_permissions', 'home', 'manage_settings', 'view_user_detail', 'create_user', 'view_system_logs'}
+INFO 2025-01-08 17:30:25,537 decorators 61248 83408 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:30:30,795 middleware 61248 83408 User admin loaded with roles: ['超级管理员'] and permissions: {'edit_user', 'view_user_list', 'delete_user', 'manage_roles', 'assign_permissions', 'home', 'manage_settings', 'view_user_detail', 'create_user', 'view_system_logs'}
+INFO 2025-01-08 17:30:30,795 decorators 61248 83408 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:30:32,094 middleware 61248 83408 User admin loaded with roles: ['超级管理员'] and permissions: {'edit_user', 'view_user_list', 'delete_user', 'manage_roles', 'assign_permissions', 'home', 'manage_settings', 'view_user_detail', 'create_user', 'view_system_logs'}
+INFO 2025-01-08 17:30:32,095 decorators 61248 83408 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:30:32,263 middleware 61248 83408 User admin loaded with roles: ['超级管理员'] and permissions: {'edit_user', 'view_user_list', 'delete_user', 'manage_roles', 'assign_permissions', 'home', 'manage_settings', 'view_user_detail', 'create_user', 'view_system_logs'}
+DEBUG 2025-01-08 17:30:38,486 middleware 61248 83408 User admin loaded with roles: ['超级管理员'] and permissions: {'edit_user', 'view_user_list', 'delete_user', 'manage_roles', 'assign_permissions', 'home', 'manage_settings', 'view_user_detail', 'create_user', 'view_system_logs'}
+INFO 2025-01-08 17:30:38,486 decorators 61248 83408 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:30:53,295 middleware 49944 45812 User admin loaded with roles: ['超级管理员'] and permissions: {'assign_permissions', 'manage_roles', 'edit_user', 'view_user_list', 'manage_settings', 'view_system_logs', 'view_user_detail', 'home', 'delete_user', 'create_user'}
+INFO 2025-01-08 17:30:53,296 decorators 49944 45812 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:31:04,455 middleware 81792 1664 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'delete_user', 'manage_roles', 'edit_user', 'create_user', 'manage_settings', 'assign_permissions', 'view_system_logs', 'view_user_list', 'home'}
+INFO 2025-01-08 17:31:04,456 decorators 81792 1664 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:31:11,380 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:31:11,381 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:31:56,997 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:31:56,998 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:32:00,068 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:32:00,068 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:32:04,916 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:32:04,916 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:33:29,313 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:33:29,314 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:33:37,221 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:33:37,221 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:33:39,469 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:33:39,469 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:33:53,294 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+DEBUG 2025-01-08 17:33:53,295 views 59820 38560 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:34:01,728 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+DEBUG 2025-01-08 17:34:01,729 views 59820 38560 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:34:03,305 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:34:03,305 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:34:08,082 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:34:08,083 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:34:40,456 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+DEBUG 2025-01-08 17:34:41,827 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:34:41,827 decorators 59820 38560 User admin granted access with permission: accounts.manage_roles
+DEBUG 2025-01-08 17:34:42,396 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+DEBUG 2025-01-08 17:34:42,398 views 59820 38560 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:34:42,812 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+DEBUG 2025-01-08 17:34:43,588 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:34:43,588 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:05,447 middleware 59820 38560 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_roles', 'view_user_detail', 'manage_settings', 'edit_user', 'delete_user', 'view_system_logs', 'assign_permissions', 'home', 'view_user_list'}
+INFO 2025-01-08 17:35:05,447 decorators 59820 38560 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:12,233 middleware 69592 16156 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'assign_permissions', 'edit_user', 'create_user', 'view_system_logs', 'home', 'view_user_detail', 'manage_settings', 'delete_user', 'view_user_list'}
+INFO 2025-01-08 17:35:12,234 decorators 69592 16156 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:15,754 middleware 69592 16156 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'assign_permissions', 'edit_user', 'create_user', 'view_system_logs', 'home', 'view_user_detail', 'manage_settings', 'delete_user', 'view_user_list'}
+INFO 2025-01-08 17:35:15,755 decorators 69592 16156 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:36,697 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:35:36,698 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:38,732 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:35:38,732 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:41,407 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:35:41,408 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:44,076 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:35:44,077 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:45,244 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:35:45,245 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:46,152 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:35:46,152 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:35:49,764 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:35:49,765 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:36:05,346 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:36:05,347 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:36:06,846 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:36:06,847 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:36:07,840 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:36:07,840 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:36:09,317 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:36:09,318 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:36:09,508 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:36:09,509 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:36:09,754 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:36:09,755 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:38:52,019 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:38:52,019 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:38:53,256 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:38:53,256 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:38:55,063 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:38:55,063 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:00,098 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:00,099 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:01,657 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:01,659 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:02,641 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:02,642 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:03,738 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:03,738 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:04,685 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:04,686 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:05,662 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:05,663 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:09,509 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:09,510 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:11,556 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:11,556 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:13,326 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:13,326 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:15,193 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:15,194 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:39:17,123 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:39:17,123 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:40:24,504 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:40:24,504 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:40:31,308 middleware 40352 49608 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'manage_settings', 'view_system_logs', 'assign_permissions', 'delete_user', 'manage_roles', 'edit_user', 'view_user_detail', 'home', 'view_user_list'}
+INFO 2025-01-08 17:40:31,308 decorators 40352 49608 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:43:13,504 middleware 56912 30748 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'home', 'view_system_logs', 'view_user_list', 'view_user_detail', 'assign_permissions', 'delete_user', 'manage_settings', 'edit_user', 'create_user'}
+DEBUG 2025-01-08 17:43:13,506 views 56912 30748 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:26,465 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:26,467 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:28,872 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:28,873 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:30,280 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:30,282 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:31,410 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:31,412 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:32,626 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:32,627 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:33,439 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:33,440 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:34,561 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:34,564 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:35,609 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:35,612 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:36,476 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:36,478 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:37,259 middleware 62188 27904 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'manage_roles', 'delete_user', 'view_system_logs', 'manage_settings', 'view_user_list', 'view_user_detail', 'edit_user'}
+DEBUG 2025-01-08 17:43:37,261 views 62188 27904 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:45,768 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:43:45,770 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:47,422 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:43:47,423 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:48,527 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:43:48,528 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:49,629 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:43:49,630 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:43:50,586 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:43:50,587 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:44:00,342 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:44:00,343 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:44:01,600 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:44:01,601 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:44:02,629 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:44:02,630 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:44:03,390 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:44:03,392 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:44:04,564 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:44:04,566 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:44:05,645 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+DEBUG 2025-01-08 17:44:05,647 views 27296 87104 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:44:57,878 middleware 27296 87104 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'delete_user', 'create_user', 'view_user_list', 'manage_roles', 'view_system_logs', 'view_user_detail', 'assign_permissions', 'edit_user', 'manage_settings'}
+INFO 2025-01-08 17:44:57,878 decorators 27296 87104 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:50:21,734 middleware 26460 86636 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_list', 'view_system_logs', 'manage_settings', 'view_user_detail', 'edit_user', 'delete_user', 'create_user', 'assign_permissions', 'home', 'manage_roles'}
+INFO 2025-01-08 17:50:21,734 decorators 26460 86636 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:50:29,245 middleware 26460 86636 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_list', 'view_system_logs', 'manage_settings', 'view_user_detail', 'edit_user', 'delete_user', 'create_user', 'assign_permissions', 'home', 'manage_roles'}
+INFO 2025-01-08 17:50:29,246 decorators 26460 86636 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:50:52,294 middleware 43532 40520 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_detail', 'assign_permissions', 'delete_user', 'create_user', 'manage_settings', 'view_user_list', 'manage_roles', 'home', 'view_system_logs', 'edit_user'}
+INFO 2025-01-08 17:50:52,295 decorators 43532 40520 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:53:17,359 middleware 39332 75128 User admin loaded with roles: ['超级管理员'] and permissions: {'create_user', 'assign_permissions', 'home', 'view_user_detail', 'manage_roles', 'view_user_list', 'view_system_logs', 'edit_user', 'delete_user', 'manage_settings'}
+INFO 2025-01-08 17:53:17,360 decorators 39332 75128 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:53:29,882 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+INFO 2025-01-08 17:53:29,882 decorators 36888 39760 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:54:11,292 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+INFO 2025-01-08 17:54:11,292 decorators 36888 39760 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:54:12,861 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+INFO 2025-01-08 17:54:12,861 decorators 36888 39760 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:54:15,341 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+DEBUG 2025-01-08 17:54:15,343 views 36888 39760 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:54:17,641 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+DEBUG 2025-01-08 17:54:17,645 views 36888 39760 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:54:19,126 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+DEBUG 2025-01-08 17:54:19,129 views 36888 39760 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:54:19,771 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+DEBUG 2025-01-08 17:54:19,773 views 36888 39760 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:54:22,576 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+DEBUG 2025-01-08 17:54:22,578 views 36888 39760 User admin accessing user list with edit_permission: True, delete_permission: True
+DEBUG 2025-01-08 17:54:25,030 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+INFO 2025-01-08 17:54:25,030 decorators 36888 39760 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 17:54:25,719 middleware 36888 39760 User admin loaded with roles: ['超级管理员'] and permissions: {'manage_roles', 'create_user', 'view_user_list', 'assign_permissions', 'view_system_logs', 'home', 'view_user_detail', 'delete_user', 'manage_settings', 'edit_user'}
+DEBUG 2025-01-08 18:09:19,934 middleware 66904 4852 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_list', 'manage_settings', 'delete_user', 'assign_permissions', 'manage_roles', 'edit_user', 'view_user_detail', 'view_system_logs', 'home', 'create_user'}
+DEBUG 2025-01-08 18:09:22,094 middleware 66904 4852 User admin loaded with roles: ['超级管理员'] and permissions: {'view_user_list', 'manage_settings', 'delete_user', 'assign_permissions', 'manage_roles', 'edit_user', 'view_user_detail', 'view_system_logs', 'home', 'create_user'}
+INFO 2025-01-08 18:09:22,095 decorators 66904 4852 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 18:09:35,557 middleware 78300 64704 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'manage_settings', 'view_user_detail', 'view_user_list', 'delete_user', 'edit_user', 'view_system_logs', 'assign_permissions', 'manage_roles', 'create_user'}
+INFO 2025-01-08 18:09:35,558 decorators 78300 64704 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 18:10:04,629 middleware 78300 64704 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'manage_settings', 'view_user_detail', 'view_user_list', 'delete_user', 'edit_user', 'view_system_logs', 'assign_permissions', 'manage_roles', 'create_user'}
+INFO 2025-01-08 18:10:04,629 decorators 78300 64704 User admin granted access with permission: view_system_logs
+DEBUG 2025-01-08 18:10:06,255 middleware 78300 64704 User admin loaded with roles: ['超级管理员'] and permissions: {'home', 'manage_settings', 'view_user_detail', 'view_user_list', 'delete_user', 'edit_user', 'view_system_logs', 'assign_permissions', 'manage_roles', 'create_user'}
+INFO 2025-01-08 18:10:06,255 decorators 78300 64704 User admin granted access with permission: view_system_logs

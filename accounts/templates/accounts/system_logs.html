@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}系统日志 - Django RBAC 项目{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold mb-6">系统日志</h1>
+
+        <div class="bg-white shadow-md rounded px-10 pt-8 pb-10 mb-6">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                    <tr>
+                        <th class="text-left py-2 ">时间</th>
+                        <th class="text-left py-2">级别</th>
+                        <th class="text-left py-2">消息</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for log in page_obj %}
+                        <tr class="border-t">
+                            <td class="py-3">{{ log.split|slice:"1:3"|join:" " }}</td>
+                            <td class="py-2">
+                                {% with level=log.split|first %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                {% if level == 'DEBUG' %}bg-blue-100 text-blue-800
+                                {% elif level == 'INFO' %}bg-green-100 text-green-800
+                                {% elif level == 'WARNING' %}bg-yellow-100 text-yellow-800
+                                {% elif level == 'ERROR' %}bg-red-100 text-red-800
+                                {% elif level == 'CRITICAL' %}bg-purple-100 text-purple-800
+                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {{ level }}
+                            </span>
+                                {% endwith %}
+                            </td>
+                            <td class="py-2">{{ log.split|slice:"2:"|join:" " }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center py-4">暂无日志记录</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+    {% if page_obj.has_other_pages %}
+    <div class="flex justify-center mt-4">
+        <nav class="inline-flex rounded-md shadow">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    上一页
+                </a>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+    {% if i <= 5 or i == page_obj.number or i > page_obj.number|add:"-3" and i < page_obj.number|add:"3" or i == page_obj.paginator.num_pages %}
+        {% if page_obj.number == i %}
+            <span class="px-3 py-2 border border-gray-300 bg-blue-50 text-sm font-medium text-blue-600">
+                {{ i }}
+            </span>
+        {% else %}
+            <a href="?page={{ i }}" class="px-3 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                {{ i }}
+            </a>
+        {% endif %}
+    {% elif i == 6 or i == page_obj.paginator.num_pages|add:"-1" %}
+        <span class="px-3 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500">...</span>
+    {% endif %}
+{% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    下一页
+                </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+    </div>
+{% endblock %}
+
