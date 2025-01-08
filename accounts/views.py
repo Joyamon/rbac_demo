@@ -352,7 +352,7 @@ def assign_role_to_user(request, user_id):
 def user_list(request):
     users = CustomUser.objects.all().order_by('username')
     page = request.GET.get('page', 1)
-    per_page = request.GET.get('per_page', 1)
+    per_page = request.GET.get('per_page', 5)
 
     paginator = Paginator(users, per_page)
 
