@@ -321,31 +321,45 @@ def assign_permissions_to_role(request, role_id):
 
 @login_required
 def assign_role_to_user(request, user_id):
-    user = get_object_or_404(CustomUser, id=user_id)
+    user_ = get_object_or_404(CustomUser, id=user_id)
+    role_list = set(UserRole.objects.all())  # 全部角色
+    assign_role = set(UserRole.objects.filter(user_id=user_id))  # 用户已分配的角色
+    is_subset = assign_role.issubset(role_list)
     can_manage_roles = has_permission(request.user, 'manage_roles')
+    form = UserRoleForm(request.POST, user=user_)
     if request.method == 'POST':
-        form = UserRoleForm(request.POST, user=user)
-        # 检查用户是否有角色
-        if user.user_roles.exists():
-            messages.info(request,
-                          f'"{user.username}"已分配了"{UserRole.objects.get(user_id=user_id).role.name}"角色')
+        if form.is_valid():
+            user_role = form.save()
+            messages.success(request, f'已成功将角色 "{user_role.role.name}" 分配给用户 "{user_.username}"。')
+            user_assigned_role.send(sender=UserActivity, user=request.user, instance=user_)  # 发送信号,记录用户授权
+            return redirect('assign_role_to_user', user_id=user_.id)
+        if is_subset:
+            messages.info(request, f'用户 "{user_.username}" 已经拥有该角色。')
             return redirect('user_list')
-        else:
-            if form.is_valid():
-                user_role = form.save()
-                messages.success(request, f'已成功将角色 "{user_role.role.name}" 分配给用户 "{user.username}"。')
-                user_assigned_role.send(sender=UserActivity, user=request.user, instance=user)  # 发送信号,记录用户授权
-                return redirect('user_list')
     else:
-        form = UserRoleForm(user=user)
-
-    user_roles = user.user_roles.all()
+        form = UserRoleForm(user=user_)
+    user_roles = user_.user_roles.all()
     return render(request, 'accounts/assign_role_to_user.html', {
         'form': form,
-        'user': user,
+        'user_': user_,
         'user_roles': user_roles,
         'can_manage_roles': can_manage_roles
     })
+
+
+@login_required
+@permission_required('manage_roles')
+def unassign_role_from_user(request, user_id, role_id):
+    user = get_object_or_404(CustomUser, id=user_id)
+    role = get_object_or_404(Role, id=role_id)
+    user_role = get_object_or_404(UserRole, user=user, role=role)
+
+    if request.method == 'POST':
+        user_role.delete()
+        messages.success(request, f'已成功取消用户 "{user.username}" 的角色 "{role.name}"。')
+        return redirect('assign_role_to_user', user_id=user.id)
+
+    return redirect('assign_role_to_user', user_id=user.id)
 
 
 @login_required
@@ -402,11 +416,11 @@ def user_list(request):
 
 @login_required
 def user_detail(request, user_id):
-    user = get_object_or_404(CustomUser, id=user_id)
-    user_roles = user.user_roles.all()
-    user_permissions = user.get_all_permissions()
+    user_sigle = get_object_or_404(CustomUser, id=user_id)
+    user_roles = user_sigle.user_roles.all()
+    user_permissions = user_sigle.get_all_permissions()
     return render(request, 'accounts/user_detail.html', {
-        'user': user,
+        'user_sigle': user_sigle,
         'user_roles': user_roles,
         'user_permissions': user_permissions
     })
@@ -462,7 +476,7 @@ def view_system_logs(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
-        "page_obj":page_obj
+        "page_obj": page_obj
 
     }
     return render(request, 'accounts/system_logs.html', context)

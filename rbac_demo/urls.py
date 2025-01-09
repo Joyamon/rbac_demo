@@ -32,6 +32,8 @@ urlpatterns = [
     path('accounts/roles/<int:role_id>/assign-permissions/', account_views.assign_permissions_to_role,
          name='assign_permissions_to_role'),
     path('accounts/users/<int:user_id>/assign-role/', account_views.assign_role_to_user, name='assign_role_to_user'),
+    path('accounts/users/<int:user_id>/unassign-role/<int:role_id>/', account_views.unassign_role_from_user,
+         name='unassign_role_from_user'),
     path('accounts/users/', account_views.user_list, name='user_list'),
     path('accounts/users/<int:user_id>/', account_views.user_detail, name='user_detail'),
     path('accounts/users/<int:user_id>/edit/', account_views.user_edit, name='user_edit'),
