@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -136,7 +136,6 @@ AUTHENTICATION_BACKENDS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-
     'formatters': {
         'verbose': {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
@@ -144,13 +143,14 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'rotating_file': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'log/debug.log',
-            'encoding': 'utf-8',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
+            'maxBytes': 100 * 1024 * 1024,  # 100 MB  分割文件，5个文件
+            'backupCount': 5,
             'formatter': 'verbose',
-
+            'encoding': 'utf-8',
         },
         'console': {
             'level': 'DEBUG',
@@ -159,10 +159,17 @@ LOGGING = {
         },
     },
     'loggers': {
+        'django': {
+            'handlers': ['rotating_file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'accounts': {
-            'handlers': ['file', 'console'],
+            'handlers': ['rotating_file', 'console'],
             'level': 'DEBUG',
             'propagate': True,
         },
     },
 }
+
+
