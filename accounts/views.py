@@ -348,7 +348,6 @@ def assign_role_to_user(request, user_id):
 
 
 @login_required
-@permission_required('manage_roles')
 def unassign_role_from_user(request, user_id, role_id):
     user = get_object_or_404(CustomUser, id=user_id)
     role = get_object_or_404(Role, id=role_id)

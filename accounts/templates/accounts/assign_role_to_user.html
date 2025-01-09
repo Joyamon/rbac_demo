@@ -44,7 +44,7 @@
                                         分配时间: {{ user_role.assigned_at|date:"Y-m-d H:i" }}
                                     </div>
                                     <form method="post"
-                                          action="{% url 'unassign_role_from_user' user.id user_role.role.id %}">
+                                          action="{% url 'unassign_role_from_user' user_.id user_role.role.id %}">
                                         {% csrf_token %}
                                         <button type="submit"
                                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
