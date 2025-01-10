@@ -8,7 +8,7 @@
         <h2 class="text-3xl font-extrabold text-gray-900 mb-6">
             个人资料
         </h2>
-        
+
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -37,24 +37,54 @@
                         <dt class="text-sm font-medium text-gray-500">
                             角色
                         </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            {% for role in roles %}
-                                {{ role }}{% if not forloop.last %}, {% endif %}
-                            {% empty %}
-                                无分配角色
-                            {% endfor %}
+                        <dd class="mt-1 sm:mt-0 sm:col-span-2">
+                            <div class="flex flex-wrap gap-2">
+                                {% for role in roles %}
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
+                                        {% if role == '超级管理员' %}
+                                            bg-purple-100 text-purple-800
+                                        {% elif role == '管理员' %}
+                                            bg-blue-100 text-blue-800
+                                        {% elif role == '普通用户' %}
+                                            bg-green-100 text-green-800
+                                        {% else %}
+                                            bg-gray-100 text-gray-800
+                                        {% endif %}">
+                                        {{ role }}
+                                    </span>
+                                {% empty %}
+                                    <span class="text-gray-500">无分配角色</span>
+                                {% endfor %}
+                            </div>
                         </dd>
                     </div>
                     <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">
                             权限
                         </dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            {% for permission in permissions %}
-                                {{ permission }}{% if not forloop.last %}, {% endif %}
-                            {% empty %}
-                                无分配权限
-                            {% endfor %}
+                        <dd class="mt-1 sm:mt-0 sm:col-span-2">
+                            <div class="flex flex-wrap gap-2">
+                                {% for permission in permissions %}
+                                    <span class="inline-flex items-center px-2 py-1 rounded-md text-sm font-medium
+                                        {% if 'view' in permission %}
+                                            bg-blue-50 text-blue-700
+                                        {% elif 'add' in permission or 'create' in permission %}
+                                            bg-green-50 text-green-700
+                                        {% elif 'delete' in permission %}
+                                            bg-red-50 text-red-700
+                                        {% elif 'edit' in permission or 'change' in permission %}
+                                            bg-yellow-50 text-yellow-700
+                                        {% elif 'manage' in permission %}
+                                            bg-purple-50 text-purple-700
+                                        {% else %}
+                                            bg-gray-50 text-gray-700
+                                        {% endif %}">
+                                        {{ permission }}
+                                    </span>
+                                {% empty %}
+                                    <span class="text-gray-500">无分配权限</span>
+                                {% endfor %}
+                            </div>
                         </dd>
                     </div>
                 </dl>

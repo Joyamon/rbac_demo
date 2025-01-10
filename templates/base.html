@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Django RBAC 项目{% endblock %}</title>
+    {#    浏览器图标#}
+    <link rel="icon" type="image/svg+xml" href="{% static 'svg/s-user-backup.svg' %}">
     <link href="{% static "/css/tailwind.min.css" %}" rel="stylesheet">
     <style>
     </style>
@@ -12,7 +14,10 @@
 <body class="bg-gray-100">
 <header class="bg-blue-600 text-white p-4">
     <nav class="container mx-auto flex justify-between items-center">
-        <a href="/" class="text-2xl font-bold">RBAC 系统</a>
+        <div class="flex items-center">
+            <img src="{% static 'svg/s-user-backup.svg' %}" alt="Logo" class="w-15 h-12 mr-5">
+            <a href="/" class="text-2xl font-bold">RBAC 系统</a>
+        </div>
         <ul class="flex space-x-4 items-center">
             {% if user.is_authenticated %}
                 <li><a href="{% url 'home' %}" class="hover:underline">首页</a></li>
