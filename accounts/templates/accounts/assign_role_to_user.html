@@ -40,9 +40,9 @@
                                     {{ user_role.role.name }}
                                 </div>
                                 <div class="flex items-center">
-                                    <div class="text-sm text-gray-500 mr-4">
-                                        分配时间: {{ user_role.assigned_at|date:"Y-m-d H:i" }}
-                                    </div>
+{#                                    <div class="text-sm text-gray-500 mr-4">#}
+{#                                        分配时间: {{ assign_time|date:"Y-m-d H:i" }}#}
+{#                                    </div>#}
                                     <form method="post"
                                           action="{% url 'unassign_role_from_user' user_.id user_role.role.id %}">
                                         {% csrf_token %}

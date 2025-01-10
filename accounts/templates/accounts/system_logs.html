@@ -67,7 +67,7 @@
                 {{ i }}
             </a>
         {% endif %}
-    {% elif i == 6 or i == page_obj.paginator.num_pages|add:"-1" %}
+    {% elif i == 3 or i == page_obj.paginator.num_pages|add:"-1" %}
         <span class="px-3 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500">...</span>
     {% endif %}
 {% endfor %}
