@@ -299,7 +299,7 @@ def change_password(request):
 
 
 @login_required
-def profile(request,user_id):
+def profile(request, user_id):
     # 通过user_id获取用户的角色列表
     user = get_object_or_404(CustomUser, id=user_id)
     roles = UserRole.objects.filter(user_id=user_id).values_list('role__name', flat=True)
@@ -307,7 +307,7 @@ def profile(request,user_id):
     # 通过user_id获取用户的权限
     permissions = UserRole.objects.filter(user_id=user_id).values_list('role__permissions__name', flat=True)
 
-    return render(request, 'accounts/profile.html',{'roles': roles, 'permissions': permissions,'user': user})
+    return render(request, 'accounts/profile.html', {'roles': roles, 'permissions': permissions, 'user': user})
 
 
 def assign_permissions_to_role(request, role_id):
