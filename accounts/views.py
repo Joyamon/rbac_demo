@@ -189,7 +189,7 @@ def delete_role(request, role_id):
 
 
 @login_required
-# @permission_required('accounts.manage_permissions')
+@permission_required('accounts.manage_roles')
 def manage_permissions(request):
     if request.method == 'POST':
         form = PermissionForm(request.POST)
