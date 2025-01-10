@@ -116,10 +116,10 @@ def home(request):
     ]
 
     # 过滤用户有权限访问的操作
-    available_actions = [
-        action for action in quick_actions
-        if request.user.has_perm(action['permission'])
-    ]
+    # available_actions = [
+    #     action for action in quick_actions
+    #     if request.user.has_perm(action['permission'])
+    # ]
     list_data = []
     for activity in UserActivity.objects.all().order_by('-timestamp'):
         list_data.append({
@@ -136,7 +136,7 @@ def home(request):
         'total_users': total_users,
         'total_roles': total_roles,
         'total_permissions': total_permissions,
-        'quick_actions': available_actions,
+        'quick_actions': quick_actions,
         'recent_activities': recent_activities,
     }
 

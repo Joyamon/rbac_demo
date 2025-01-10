@@ -34,7 +34,7 @@ def permission_required(permission_codename):
                     f"User {request.user.username} denied access to view requiring "
                     f"permission: {permission_codename}"
                 )
-                messages.error(request, '您没有权限执行此操作。')
+                messages.error(request, '您没有权限执行此操作，请联系系统管理员进行授权。')
                 return redirect('home')
 
             logger.info(
