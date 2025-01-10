@@ -47,7 +47,7 @@
                     </div>
                 </li>
 
-                <li><a href="{% url 'user_detail' user.id %}" class="hover:underline">{{ user.username }}</a></li>
+                <li><a href="{% url 'profile' user.id %}" class="hover:underline">{{ user.username }}</a></li>
                 <li><a href="#" onclick="showLogoutModal()" class="hover:underline">登出</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}" class="hover:underline">登录</a></li>

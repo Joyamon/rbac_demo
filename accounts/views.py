@@ -1,4 +1,3 @@
-
 import os
 import time
 from datetime import datetime
@@ -299,11 +298,18 @@ def change_password(request):
     })
 
 
-def profile(request):
-    return render(request, 'accounts/profile.html')
-
-
 @login_required
+def profile(request,user_id):
+    # 通过user_id获取用户的角色列表
+    user = get_object_or_404(CustomUser, id=user_id)
+    roles = UserRole.objects.filter(user_id=user_id).values_list('role__name', flat=True)
+    print(roles)
+    # 通过user_id获取用户的权限
+    permissions = UserRole.objects.filter(user_id=user_id).values_list('role__permissions__name', flat=True)
+
+    return render(request, 'accounts/profile.html',{'roles': roles, 'permissions': permissions,'user': user})
+
+
 def assign_permissions_to_role(request, role_id):
     role = get_object_or_404(Role, id=role_id)
     if request.method == 'POST':
