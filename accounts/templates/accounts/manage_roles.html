@@ -25,11 +25,17 @@
                         <td class="py-2 border-t">{{ role.name }}</td>
                         <td class="py-2 border-t">{{ role.description }}</td>
                         <td class="py-2 border-t">
+                            {% if can_assign_permission %}
                             <a href="{% url 'assign_permissions_to_role' role.id %}" class="text-blue-500 hover:text-blue-800">分配权限</a>
+                            {% endif %}
+                            {% if can_edit_role %}
                             <a href="{% url 'edit_role' role.id %}" class="text-green-500 hover:text-blue-800">修改角色</a>
+                            {% endif %}
+                            {% if can_delete_role %}
                             <a href="{% url 'delete_role' role.id %}" class="text-red-500 hover:text-blue-800"
                                onclick="return confirm('确定要删除角色`{{ role.name }}`吗？')"
                             >删除角色</a>
+                            {% endif %}
 
                         </td>
                     </tr>
@@ -54,11 +60,13 @@
                 </label>
                 {{ form.description }}
             </div>
+            {% if can_add_role %}
             <div class="flex items-center justify-between ">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                     创建角色
                 </button>
             </div>
+            {% endif %}
         </form>
     </div>
 </div>

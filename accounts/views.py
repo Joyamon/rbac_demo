@@ -173,7 +173,18 @@ def manage_roles(request):
         form = RoleForm()
 
     roles = Role.objects.all()
-    return render(request, 'accounts/manage_roles.html', {'form': form, 'roles': roles})
+    can_add_role = request.user.has_permission('add_role')
+    can_edit_role = request.user.has_permission('edit_role')
+    can_delete_role = request.user.has_permission('delete_role')
+    can_assign_permission = request.user.has_permission('assign_permission')
+    return render(request, 'accounts/manage_roles.html',
+                  {'form': form,
+                   'roles': roles,
+                   'can_add_role': can_add_role,
+                   'can_edit_role': can_edit_role,
+                   'can_delete_role': can_delete_role,
+                   'can_assign_permission': can_assign_permission
+                   })
 
 
 @login_required
@@ -199,7 +210,12 @@ def manage_permissions(request):
         form = PermissionForm()
 
     permissions = Permission.objects.all()
-    return render(request, 'accounts/manage_permissions.html', {'form': form, 'permissions': permissions})
+    can_add_permission = request.user.has_permission('add_permission')
+    can_delete_permission = request.user.has_permission('delete_permission')
+    return render(request, 'accounts/manage_permissions.html', {'form': form,
+                                                                'permissions': permissions,
+                                                                'can_add_permission': can_add_permission,
+                                                                'can_delete_permission': can_delete_permission})
 
 
 @login_required
