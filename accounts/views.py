@@ -16,7 +16,8 @@ import logging
 from .decorators import permission_required
 from django.db.models import Q
 from .forms import ForgotPasswordForm, ResetPasswordForm
-from .signals import user_edited, user_deleted, user_assigned_role, add_role
+from .signals import user_edited, user_deleted, user_assigned_role, add_role, user_details, add_permission, \
+    del_permission, edit_role_signal, del_role_signal, assign_permission_signal
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +54,7 @@ def edit_role(request, role_id):
         if form.is_valid():
             form.save()
             messages.success(request, '角色已更新。')
+            edit_role_signal.send(sender=UserActivity, user=request.user, instance=role)
             return redirect('manage_roles')
     else:
         form = RoleForm(instance=role)
@@ -192,6 +194,7 @@ def delete_role(request, role_id):
     role = get_object_or_404(Role, id=role_id)
     try:
         role.delete()
+        del_role_signal.send(sender=UserActivity, user=request.user, instance=role)
         messages.success(request, f'角色 {role.name} 已成功删除。')
     except ProtectedError:
         messages.error(request, f'无法删除角色 {role.name}，因为它仍在使用中。')
@@ -205,6 +208,7 @@ def manage_permissions(request):
         if form.is_valid():
             permission = form.save()
             messages.success(request, f'权限 "{permission.name}" 创建成功。')
+            add_permission.send(sender=UserActivity, user=request.user, instance=permission)
             return redirect('manage_permissions')
     else:
         form = PermissionForm()
@@ -224,6 +228,7 @@ def delete_permission(request, permission_id):
     try:
         permission.delete()
         messages.success(request, f'权限 "{permission.name}" 已成功删除。')
+        del_permission.send(sender=UserActivity, user=request.user, instance=permission)
     except ProtectedError:
         messages.error(request, f'无法删除权限 "{permission.name}"，因为它正被使用。')
     return redirect('manage_permissions')
@@ -259,6 +264,7 @@ def assign_permission(request, role_id):
                 selected_permissions = request.POST.getlist('permissions')
                 role.permissions.set(Permission.objects.filter(id__in=selected_permissions))
                 messages.success(request, f'已成功更新角色 "{role.name}" 的权限。')
+
                 logger.info(f'Updated permissions for role {role.name} (ID: {role.id})')
                 return redirect('manage_roles')
             except Exception as e:
@@ -329,6 +335,7 @@ def assign_permissions_to_role(request, role_id):
     if request.method == 'POST':
         selected_permissions = request.POST.getlist('permissions')
         role.permissions.set(selected_permissions)
+        assign_permission_signal.send(sender=UserActivity, user=request.user, instance=role)
         messages.success(request, f'已成功更新角色 "{role.name}" 的权限。')
         return redirect('manage_roles')
 
@@ -440,6 +447,7 @@ def user_detail(request, user_id):
     user_sigle = get_object_or_404(CustomUser, id=user_id)
     user_roles = user_sigle.user_roles.all()
     user_permissions = user_sigle.get_all_permissions()
+    user_details.send(sender=UserActivity, user=request.user, instance=user_sigle)
     return render(request, 'accounts/user_detail.html', {
         'user_sigle': user_sigle,
         'user_roles': user_roles,
