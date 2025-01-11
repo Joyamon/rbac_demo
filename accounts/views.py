@@ -161,7 +161,6 @@ def user_login(request):
 
 
 @login_required
-@permission_required('accounts.manage_roles')
 def manage_roles(request):
     if request.method == 'POST':
         form = RoleForm(request.POST)
@@ -189,7 +188,6 @@ def delete_role(request, role_id):
 
 
 @login_required
-@permission_required('accounts.manage_roles')
 def manage_permissions(request):
     if request.method == 'POST':
         form = PermissionForm(request.POST)
@@ -449,7 +447,6 @@ def user_edit(request, user_id):
 
 
 @login_required
-@permission_required('view_system_logs')
 def view_system_logs(request):
     log_entries = []
     path = os.path.join(settings.BASE_DIR, r'log/debug.log')
