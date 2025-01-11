@@ -11,7 +11,7 @@
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <table class="w-full">
                     <thead>
-                    <tr class="border-t">
+                    <tr>
                         <th class="text-left">名称</th>
                         <th class="text-left">代码名称</th>
                         <th class="text-left">描述</th>
@@ -20,17 +20,17 @@
                     </thead>
                     <tbody>
                     {% for permission in permissions %}
-                        <tr class="border-t">
+                        <tr>
                             <td class="py-2 border-t">{{ permission.name }}</td>
                             <td class="py-2 border-t">{{ permission.codename }}</td>
                             <td class="py-2 border-t">{{ permission.description }}</td>
-                            <td>
-                            <a href="{% url 'delete_permission' permission.id %}"
-                               class="text-red-500 hover:text-red-800"
-                               onclick="return confirm('确定要删除此权限吗？')">
-                                删除
-                            </a>
-                        </td>
+                            <td class="py-2 border-t">
+                                <a href="{% url 'delete_permission' permission.id %}"
+                                   class="text-red-500 hover:text-blue-800"
+                                   onclick="return confirm('确定要删除`{{ permission.name }}`权限吗？')">
+                                    删除
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -53,7 +53,7 @@
                     </label>
                     {{ form.codename }}
                 </div>
-                <div class="mb-6">
+                <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.description.id_for_label }}">
                         描述
                     </label>

@@ -45,7 +45,7 @@
                                         {% if can_delete %}
                                             <a href="{% url 'user_delete' user.id %}"
                                                class="text-red-500 hover:text-red-800"
-                                               onclick="return confirm('确定要删除此用户吗？')">
+                                               onclick="return confirm('确定要删除用户`{{ user.username }}`吗？')">
                                                 删除
                                             </a>
                                         {% endif %}
