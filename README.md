@@ -75,3 +75,6 @@ rbac_demo
 #### 点击邮件链接重置密码
 <img src="static/img/点击邮件链接重置密码.png" alt="rbac_demo" style="zoom: 50%;" />
 
+## 请我喝一杯咖啡
+* 如果您喜欢这个项目，请作者喝杯咖啡。
+<img src="static/img/rmb.jpg" alt="pay" style="zoom: 50%;" />
