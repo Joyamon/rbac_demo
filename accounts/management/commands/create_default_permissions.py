@@ -7,20 +7,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         default_permissions = [
-            {
-                'name': '查看用户列表',
-                'codename': 'view_user_list',
-                'description': '允许查看系统中的用户列表'
-            },
+            # 用户列表
             {
                 'name': '查看用户详情',
                 'codename': 'view_user_detail',
                 'description': '允许查看用户的详细信息'
-            },
-            {
-                'name': '创建用户',
-                'codename': 'create_user',
-                'description': '允许创建新用户'
             },
             {
                 'name': '编辑用户',
@@ -33,24 +24,41 @@ class Command(BaseCommand):
                 'description': '允许删除用户'
             },
             {
-                'name': '管理角色',
-                'codename': 'manage_roles',
-                'description': '允许创建和管理角色'
+                'name': '分配角色',
+                'codename': 'assign_role',
+                'description': '允许分配角色给用户'
+            },
+            # 权限管理页面
+            {
+                'name': '创建权限',
+                'codename': 'add_permission',
+                'description': '允许创建权限'
+            },
+            {
+                'name': '删除权限',
+                'codename': 'delete_permission',
+                'description': '允许删除权限'
+            },
+            # 角色管理页面
+            {
+                'name': '创建角色',
+                'codename': 'add_role',
+                'description': '允许创建角色'
+            },
+            {
+                'name': '编辑角色',
+                'codename': 'edit_role',
+                'description': '允许编辑角色'
+            },
+            {
+                'name': '删除角色',
+                'codename': 'delete_role',
+                'description': '允许删除角色'
             },
             {
                 'name': '分配权限',
-                'codename': 'assign_permissions',
-                'description': '允许为角色分配权限'
-            },
-            {
-                'name': '查看系统日志',
-                'codename': 'view_system_logs',
-                'description': '允许查看系统操作日志'
-            },
-            {
-                'name': '系统设置',
-                'codename': 'manage_settings',
-                'description': '允许修改系统设置'
+                'codename': 'assign_permission',
+                'description': '允许分配权限给角色'
             }
         ]
 
