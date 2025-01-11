@@ -171,5 +171,10 @@ LOGGING = {
         },
     },
 }
-
-
+# 邮件设置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = '1210777805@qq.com'  # 请替换自己的邮箱
+EMAIL_HOST_PASSWORD = 'umbclibpysdzffii'  # 请替换自己的邮箱授权码

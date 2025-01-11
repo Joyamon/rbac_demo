@@ -7,6 +7,8 @@ logger = logging.getLogger(__name__)
 
 
 class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    password_reset_token = models.CharField(max_length=100, null=True, blank=True)
     class Meta:
         permissions = [
             ("view_user_list", "Can view user list"),

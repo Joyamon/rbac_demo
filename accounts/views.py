@@ -1,21 +1,21 @@
 import os
-import time
-from datetime import datetime
-
 from django.conf import settings
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import ProtectedError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
+from django.utils.crypto import get_random_string
 from .models import Role, Permission, UserRole, CustomUser, UserActivity
 from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, \
     CustomPasswordChangeForm, UserRoleForm
 import logging
 from .decorators import permission_required
 from django.db.models import Q
-
+from .forms import ForgotPasswordForm, ResetPasswordForm
 from .signals import user_edited, user_deleted, user_assigned_role, add_role
 
 logger = logging.getLogger(__name__)
@@ -500,3 +500,62 @@ def view_system_logs(request):
 
     }
     return render(request, 'accounts/system_logs.html', context)
+
+
+def forgot_password(request):
+    if request.method == 'POST':
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                user = CustomUser.objects.get(email=email)
+                # 生成重置令牌
+                token = get_random_string(length=32)
+                user.password_reset_token = token
+                user.save()
+
+                # 构建重置链接
+                reset_url = request.build_absolute_uri(
+                    reverse('reset_password', kwargs={'token': token})
+                )
+
+                # 发送重置邮件
+                send_mail(
+                    '重置您的密码',
+                    f'请点击以下链接重置您的密码：\n\n{reset_url}\n\n如果您没有请求重置密码，请忽略此邮件。',
+                    '1210777805@qq.com',
+                    [email],
+                    fail_silently=False,
+                )
+
+                messages.success(request, '重置链接已发送到您的邮箱，请查收。')
+                logger.info(f"Password reset link sent to {email}")
+                return redirect('login')
+            except CustomUser.DoesNotExist:
+                messages.error(request, '该邮箱未注册。')
+                logger.warning(f"Password reset attempted for non-existent email: {email}")
+    else:
+        form = ForgotPasswordForm()
+
+    return render(request, 'accounts/forgot_password.html', {'form': form})
+
+
+def reset_password(request, token):
+    try:
+        user = CustomUser.objects.get(password_reset_token=token)
+        if request.method == 'POST':
+            form = ResetPasswordForm(request.POST)
+            if form.is_valid():
+                user.set_password(form.cleaned_data['password'])
+                user.password_reset_token = None
+                user.save()
+                messages.success(request, '密码重置成功，请使用新密码登录。')
+                logger.info(f"Password reset successful for user {user.username}")
+                return redirect('login')
+        else:
+            form = ResetPasswordForm()
+        return render(request, 'accounts/reset_password.html', {'form': form})
+    except CustomUser.DoesNotExist:
+        messages.error(request, '无效的重置链接。')
+        logger.warning(f"Invalid password reset token used: {token}")
+        return redirect('login')

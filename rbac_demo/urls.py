@@ -47,5 +47,7 @@ urlpatterns = [
     path('accounts/users/change-password/', account_views.change_password, name='change_password'),
     path('accounts/users/profile/<int:user_id>', account_views.profile, name='profile'),
     path('accounts/users/system-logs/', account_views.view_system_logs, name='view_system_logs'),
+    path('forgot-password/', account_views.forgot_password, name='forgot_password'),
+    path('reset-password/<str:token>/', account_views.reset_password, name='reset_password'),
 
 ]

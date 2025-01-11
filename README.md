@@ -62,3 +62,16 @@ rbac_demo
 
 #### 修改密码
 <img src="static/img/修改密码.png" alt="rbac_demo" style="zoom: 50%;" />
+
+#### 重置密码发送链接
+<img src="static/img/重置密码发送链接.png" alt="rbac_demo" style="zoom: 50%;" />
+
+#### 邮件发送成功
+<img src="static/img/邮件发送成功.png" alt="rbac_demo" style="zoom: 50%;" />
+
+#### 重置密码发送邮件链接
+<img src="static/img/重置密码链接.jpg" alt="rbac_demo" style="zoom: 50%;" />
+
+#### 点击邮件链接重置密码
+<img src="static/img/点击邮件链接重置密码.png" alt="rbac_demo" style="zoom: 50%;" />
+

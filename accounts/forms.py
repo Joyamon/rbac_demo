@@ -172,3 +172,44 @@ class UserRoleForm(forms.ModelForm):
         if commit:
             user_role.save()
         return user_role
+
+
+from django import forms
+
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+                'placeholder': '请输入您的注册邮箱'
+            }
+        )
+    )
+
+
+class ResetPasswordForm(forms.Form):
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+                'placeholder': '请输入新密码'
+            }
+        )
+    )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+                'placeholder': '请确认新密码'
+            }
+        )
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+        if password and confirm_password and password != confirm_password:
+            raise forms.ValidationError('两次输入的密码不一致')
+        return cleaned_data
