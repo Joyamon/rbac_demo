@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}查看Word文档内容 - {{ document.title }} - Django RBAC 项目{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">查看Word文档内容: {{ document.title }}</h1>
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <strong class="text-gray-700">文件名:</strong> {{ document.filename }}
+        </div>
+        <div class="mb-4">
+            <strong class="text-gray-700">上传者:</strong> {{ document.uploaded_by.username }}
+        </div>
+        <div class="mb-4">
+            <strong class="text-gray-700">上传时间:</strong> {{ document.created_at|date:"Y-m-d H:i" }}
+        </div>
+        <div class="mb-4">
+            <strong class="text-gray-700">最后更新:</strong> {{ document.updated_at|date:"Y-m-d H:i" }}
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold mb-2">文档内容:</h2>
+            <div class="whitespace-pre-wrap">{{ content }}</div>
+        </div>
+
+        <div class="flex items-center justify-between mt-6">
+{#            {% if user.has_permission('edit_document') %}#}
+            <a href="{% url 'edit_document' document.id %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                编辑文档
+            </a>
+{#            {% endif %}#}
+{#            {% if user.has_permission('download_document') %}#}
+            <a href="{% url 'download_document' document.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                下载文档
+            </a>
+{#            {% endif %}#}
+            <a href="{% url 'document_list' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                返回文档列表
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

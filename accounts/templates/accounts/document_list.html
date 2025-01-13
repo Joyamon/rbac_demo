@@ -32,6 +32,9 @@
                     <td class="py-2">{{ document.created_at|date:"Y-m-d H:i" }}</td>
                     <td class="py-2">
                         <a href="{% url 'view_document' document.id %}" class="text-blue-500 hover:text-blue-800 mr-2">查看</a>
+                        {% if document.get_file_type != 'other' %}
+                        <a href="{% url 'view_document_content' document.id %}" class="text-indigo-500 hover:text-indigo-800 mr-2">在线查看</a>
+                        {% endif %}
 {#                        {% if user.has_permission('edit_document') %}#}
                         <a href="{% url 'edit_document' document.id %}" class="text-green-500 hover:text-green-800 mr-2">编辑</a>
 {#                        {% endif %}#}

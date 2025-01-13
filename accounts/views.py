@@ -19,7 +19,8 @@ from django.db.models import Q
 from .forms import ForgotPasswordForm, ResetPasswordForm
 from .signals import user_edited, user_deleted, user_assigned_role, add_role, user_details, add_permission, \
     del_permission, edit_role_signal, del_role_signal, assign_permission_signal
-
+from docx import Document as DocxDocument
+import pandas as pd
 logger = logging.getLogger(__name__)
 
 
@@ -627,21 +628,18 @@ def upload_document(request):
 
 
 @login_required
-@permission_required('view_document')
 def document_list(request):
     documents = Document.objects.all()
     return render(request, 'accounts/document_list.html', {'documents': documents})
 
 
 @login_required
-@permission_required('view_document')
 def view_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     return render(request, 'accounts/view_document.html', {'document': document})
 
 
 @login_required
-@permission_required('edit_document')
 def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     if request.method == 'POST':
@@ -655,7 +653,6 @@ def edit_document(request, document_id):
 
 
 @login_required
-@permission_required('download_document')
 def download_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     file_path = os.path.join(settings.MEDIA_ROOT, str(document.file))
@@ -665,3 +662,62 @@ def download_document(request, document_id):
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
             return response
     raise Http404
+
+
+
+
+
+@login_required
+@permission_required('view_document')
+def view_document_content(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    file_path = os.path.join(settings.MEDIA_ROOT, str(document.file))
+
+    if os.path.exists(file_path):
+        file_type = document.get_file_type()
+
+        if file_type == 'text':
+            with open(file_path, 'r', encoding='utf-8') as file:
+                content = file.read()
+
+            language = {
+                '.py': 'python',
+                '.js': 'javascript',
+                '.html': 'html',
+                '.css': 'css',
+                '.json': 'json',
+                '.xml': 'xml'
+            }.get(document.file_extension().lower(), 'plaintext')
+
+            context = {
+                'document': document,
+                'content': content,
+                'language': language,
+            }
+            return render(request, 'accounts/view_document_content.html', context)
+
+        elif file_type == 'word':
+            doc = DocxDocument(file_path)
+            content = []
+            for para in doc.paragraphs:
+                content.append(para.text)
+            context = {
+                'document': document,
+                'content': '\n'.join(content),
+            }
+            return render(request, 'accounts/view_word_content.html', context)
+
+        elif file_type == 'excel':
+            df = pd.read_excel(file_path)
+            html_table = df.to_html(classes='table table-striped table-bordered', index=False)
+            context = {
+                'document': document,
+                'html_table': html_table,
+            }
+            return render(request, 'accounts/view_excel_content.html', context)
+
+        else:
+            return redirect('view_document', document_id=document_id)
+    else:
+        return HttpResponse("文件不存在", status=404)
+

@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.models import AbstractUser, Group, Permission as DjangoPermission
 from django.db import models
 import logging
@@ -164,4 +166,15 @@ class Document(models.Model):
 
     def file_extension(self):
         name, extension = os.path.splitext(self.file.name)
-        return extension
+        return extension.lower()
+
+    def get_file_type(self):
+        extension = self.file_extension().lower()
+        if extension in ['.txt', '.md', '.py', '.js', '.html', '.css', '.json', '.xml']:
+            return 'text'
+        elif extension in ['.docx']:
+            return 'word'
+        elif extension in ['.xlsx', '.xls']:
+            return 'excel'
+        else:
+            return 'other'
