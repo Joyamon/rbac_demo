@@ -1,15 +1,18 @@
+import json
 import os
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import ProtectedError
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.crypto import get_random_string
+from django.views.decorators.http import require_POST
+
 from .models import Role, Permission, UserRole, CustomUser, UserActivity, Document, DocumentImage
 from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, \
     CustomPasswordChangeForm, UserRoleForm, DocumentForm, DocumentEditForm
@@ -23,6 +26,7 @@ from docx import Document as DocxDocument
 import pandas as pd
 import io
 from PIL import Image
+
 logger = logging.getLogger(__name__)
 
 
@@ -665,6 +669,13 @@ def view_document(request, document_id):
 
 
 @login_required
+def delete_document(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    document.delete()
+    return redirect('document_list')
+
+
+@login_required
 @permission_required('edit_document')
 def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
@@ -767,5 +778,3 @@ def view_document_content(request, document_id):
             return redirect('view_document', document_id=document_id)
     else:
         return HttpResponse("文件不存在", status=404)
-
-

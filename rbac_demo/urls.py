@@ -54,6 +54,8 @@ urlpatterns = [
     path('documents/<int:document_id>/edit/', account_views.edit_document, name='edit_document'),
     path('documents/<int:document_id>/download/', account_views.download_document, name='download_document'),
     path('documents/<int:document_id>/content/', account_views.view_document_content, name='view_document_content'),
+    path('documents/<int:document_id>/delete/', account_views.delete_document, name='delete_document'),
+    # path('documents/<int:document_id>/save/', account_views.save_document_content, name='save_document_content'),
 
 ]
 
