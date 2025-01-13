@@ -1,5 +1,6 @@
 import os
 
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser, Group, Permission as DjangoPermission
 from django.db import models
 import logging
@@ -178,3 +179,20 @@ class Document(models.Model):
             return 'excel'
         else:
             return 'other'
+
+
+def document_image_upload_path(instance, filename):
+    # 图片将被上传到 MEDIA_ROOT/document_images/document_<id>/<filename>
+    return f'document_images/document_{instance.document.id}/{filename}'
+
+
+class DocumentImage(models.Model):
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=document_image_upload_path)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.document.title}"
+
+    def get_image_url(self):
+        return os.path.join(settings.MEDIA_URL, str(self.image))

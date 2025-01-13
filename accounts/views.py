@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.crypto import get_random_string
-from .models import Role, Permission, UserRole, CustomUser, UserActivity, Document
+from .models import Role, Permission, UserRole, CustomUser, UserActivity, Document, DocumentImage
 from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, \
     CustomPasswordChangeForm, UserRoleForm, DocumentForm, DocumentEditForm
 import logging
@@ -21,6 +21,8 @@ from .signals import user_edited, user_deleted, user_assigned_role, add_role, us
     del_permission, edit_role_signal, del_role_signal, assign_permission_signal
 from docx import Document as DocxDocument
 import pandas as pd
+import io
+from PIL import Image
 logger = logging.getLogger(__name__)
 
 
@@ -634,12 +636,36 @@ def document_list(request):
 
 
 @login_required
+@permission_required('view_document')
+def document_list(request):
+    documents = Document.objects.all()
+    return render(request, 'accounts/document_list.html', {'documents': documents})
+
+
+@login_required
+@permission_required('upload_document')
+def upload_document(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            document = form.save(commit=False)
+            document.uploaded_by = request.user
+            document.save()
+            return redirect('document_list')
+    else:
+        form = DocumentForm()
+    return render(request, 'accounts/upload_document.html', {'form': form})
+
+
+@login_required
+@permission_required('view_document')
 def view_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     return render(request, 'accounts/view_document.html', {'document': document})
 
 
 @login_required
+@permission_required('edit_document')
 def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     if request.method == 'POST':
@@ -653,6 +679,7 @@ def edit_document(request, document_id):
 
 
 @login_required
+@permission_required('download_document')
 def download_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     file_path = os.path.join(settings.MEDIA_ROOT, str(document.file))
@@ -662,9 +689,6 @@ def download_document(request, document_id):
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
             return response
     raise Http404
-
-
-
 
 
 @login_required
@@ -699,11 +723,34 @@ def view_document_content(request, document_id):
         elif file_type == 'word':
             doc = DocxDocument(file_path)
             content = []
-            for para in doc.paragraphs:
+            images = []
+            for i, para in enumerate(doc.paragraphs):
                 content.append(para.text)
+                for run in para.runs:
+                    if run._element.findall('.//w:drawing', namespaces={
+                        'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}):
+                        for inline in run._element.findall('.//wp:inline', namespaces={
+                            'wp': 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing'}):
+                            blip = inline.find('.//a:blip', namespaces={
+                                'a': 'http://schemas.openxmlformats.org/drawingml/2006/main'})
+                            if blip is not None:
+                                img_id = blip.get(
+                                    '{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed')
+                                img_part = doc.part.related_parts[img_id]
+                                image = Image.open(io.BytesIO(img_part.blob))
+                                img_filename = f'document_{document.id}_image_{i}.png'
+                                img_path = os.path.join(settings.MEDIA_ROOT, 'document_images', str(document.id),
+                                                        img_filename)
+                                os.makedirs(os.path.dirname(img_path), exist_ok=True)
+                                image.save(img_path)
+                                doc_image = DocumentImage.objects.create(document=document,
+                                                                         image=f'document_images/{document.id}/{img_filename}')
+                                images.append(doc_image)
+                        content.append(f'[Image {len(images)}]')
             context = {
                 'document': document,
                 'content': '\n'.join(content),
+                'images': images,
             }
             return render(request, 'accounts/view_word_content.html', context)
 
@@ -720,4 +767,5 @@ def view_document_content(request, document_id):
             return redirect('view_document', document_id=document_id)
     else:
         return HttpResponse("文件不存在", status=404)
+
 
