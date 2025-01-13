@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import ProtectedError
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -470,39 +471,73 @@ def user_edit(request, user_id):
         return render(request, 'accounts/user_edit.html', {'form': form})
 
 
+# @login_required
+# def view_system_logs(request):
+#     log_entries = []
+#     path = os.path.join(settings.BASE_DIR, r'log/debug.log')
+#     with open(path, 'r', encoding='utf-8') as log_file:
+#         log_entries = log_file.readlines()
+#     log_entries.reverse()  # 最新的日志在前面
+#
+#     # page = request.GET.get('page', 1)
+#     # per_page = request.GET.get('per_page', 1)
+#     #
+#     # paginator = Paginator(logs, per_page)
+#     #
+#     # try:
+#     #     logs = paginator.page(page)
+#     # except PageNotAnInteger:
+#     #     logs = paginator.page(1)
+#     # except EmptyPage:
+#     #     logs = paginator.page(paginator.num_pages)
+#     #     # 计算要显示的页码范围
+#     # index = logs.number - 1
+#     # max_index = len(paginator.page_range)
+#     # start_index = index - 2 if index >= 2 else 0
+#     # end_index = index + 3 if index <= max_index - 3 else max_index
+#     # page_range = list(paginator.page_range)[start_index:end_index]
+#     #
+#     # start_logs = (logs.number - 1) * paginator.per_page + 1
+#     # end_logs = start_logs + len(logs) - 1
+#
+#     paginator = Paginator(log_entries, 5)  # 每页显示10条日志
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+#
+#     context = {
+#         "page_obj": page_obj
+#
+#     }
+#     return render(request, 'accounts/system_logs.html', context)
+
 @login_required
 def view_system_logs(request):
-    log_entries = []
-    path = os.path.join(settings.BASE_DIR, r'log/debug.log')
-    with open(path, 'r', encoding='utf-8') as log_file:
-        log_entries = log_file.readlines()
-    log_entries.reverse()  # 最新的日志在前面
+    log_file_path = os.path.join(settings.BASE_DIR, r'log/debug.log')
+    matching_entries = []
+    try:
+        with open(log_file_path, 'r',encoding='utf-8') as file:
+            lines = file.readlines()
+        entry_buffer = []
+        for line in lines:
+            # 假设每个日志条目以某种方式开始，例如时间戳或特定的日志级别
+            if line.startswith('ERROR') or line.startswith('INFO') or line.startswith('DEBUG'):
+                # 如果缓冲区中有内容，检查它是否包含关键字
+                if entry_buffer:
+                    matching_entries.append(''.join(entry_buffer))
+                # 开始新的日志条目
+                entry_buffer = [line]
+            else:
+                # 否则，将行附加到当前日志条目
+                entry_buffer.append(line)
+        # 检查最后一个缓冲区是否包含关键字
+        if entry_buffer:
+            matching_entries.append(''.join(entry_buffer))
 
-    # page = request.GET.get('page', 1)
-    # per_page = request.GET.get('per_page', 1)
-    #
-    # paginator = Paginator(logs, per_page)
-    #
-    # try:
-    #     logs = paginator.page(page)
-    # except PageNotAnInteger:
-    #     logs = paginator.page(1)
-    # except EmptyPage:
-    #     logs = paginator.page(paginator.num_pages)
-    #     # 计算要显示的页码范围
-    # index = logs.number - 1
-    # max_index = len(paginator.page_range)
-    # start_index = index - 2 if index >= 2 else 0
-    # end_index = index + 3 if index <= max_index - 3 else max_index
-    # page_range = list(paginator.page_range)[start_index:end_index]
-    #
-    # start_logs = (logs.number - 1) * paginator.per_page + 1
-    # end_logs = start_logs + len(logs) - 1
-
-    paginator = Paginator(log_entries, 5)  # 每页显示10条日志
+    except FileNotFoundError:
+        return HttpResponse("Log file not found.", status=404)
+    paginator = Paginator(matching_entries, 5)  # 每页显示10条日志
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
     context = {
         "page_obj": page_obj
 
