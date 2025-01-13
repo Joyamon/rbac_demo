@@ -45,5 +45,11 @@ urlpatterns = [
     path('accounts/users/system-logs/', account_views.view_system_logs, name='view_system_logs'),
     path('forgot-password/', account_views.forgot_password, name='forgot_password'),
     path('reset-password/<str:token>/', account_views.reset_password, name='reset_password'),
+    # 文档相关
+    path('documents/', account_views.document_list, name='document_list'),
+    path('documents/upload/', account_views.upload_document, name='upload_document'),
+    path('documents/<int:document_id>/', account_views.view_document, name='view_document'),
+    path('documents/<int:document_id>/edit/', account_views.edit_document, name='edit_document'),
+    path('documents/<int:document_id>/download/', account_views.download_document, name='download_document'),
 
 ]

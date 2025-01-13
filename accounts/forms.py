@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from .models import CustomUser, Role, Permission, UserRole
+from .models import CustomUser, Role, Permission, UserRole, Document
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
@@ -213,3 +213,30 @@ class ResetPasswordForm(forms.Form):
         if password and confirm_password and password != confirm_password:
             raise forms.ValidationError('两次输入的密码不一致')
         return cleaned_data
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ['title', 'file']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+                'placeholder': '请输入文档标题'
+            }),
+            'file': forms.FileInput(attrs={
+                'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+            }),
+        }
+
+
+class DocumentEditForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ['title']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+                'placeholder': '请输入文档标题'
+            }),
+        }

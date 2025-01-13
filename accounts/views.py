@@ -3,16 +3,16 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import ProtectedError
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.crypto import get_random_string
-from .models import Role, Permission, UserRole, CustomUser, UserActivity
+from .models import Role, Permission, UserRole, CustomUser, UserActivity, Document
 from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, \
-    CustomPasswordChangeForm, UserRoleForm
+    CustomPasswordChangeForm, UserRoleForm, DocumentForm, DocumentEditForm
 import logging
 from .decorators import permission_required
 from django.db.models import Q
@@ -515,7 +515,7 @@ def view_system_logs(request):
     log_file_path = os.path.join(settings.BASE_DIR, r'log/debug.log')
     matching_entries = []
     try:
-        with open(log_file_path, 'r',encoding='utf-8') as file:
+        with open(log_file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
         entry_buffer = []
         for line in lines:
@@ -602,3 +602,66 @@ def reset_password(request, token):
         messages.error(request, '无效的重置链接。')
         logger.warning(f"Invalid password reset token used: {token}")
         return redirect('login')
+
+
+@login_required
+@permission_required('view_document')
+def document_list(request):
+    documents = Document.objects.all()
+    return render(request, 'accounts/document_list.html', {'documents': documents})
+
+
+@login_required
+@permission_required('upload_document')
+def upload_document(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            document = form.save(commit=False)
+            document.uploaded_by = request.user
+            document.save()
+            return redirect('document_list')
+    else:
+        form = DocumentForm()
+    return render(request, 'accounts/upload_document.html', {'form': form})
+
+
+@login_required
+@permission_required('view_document')
+def document_list(request):
+    documents = Document.objects.all()
+    return render(request, 'accounts/document_list.html', {'documents': documents})
+
+
+@login_required
+@permission_required('view_document')
+def view_document(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    return render(request, 'accounts/view_document.html', {'document': document})
+
+
+@login_required
+@permission_required('edit_document')
+def edit_document(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    if request.method == 'POST':
+        form = DocumentEditForm(request.POST, instance=document)
+        if form.is_valid():
+            form.save()
+            return redirect('document_list')
+    else:
+        form = DocumentEditForm(instance=document)
+    return render(request, 'accounts/edit_document.html', {'form': form, 'document': document})
+
+
+@login_required
+@permission_required('download_document')
+def download_document(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    file_path = os.path.join(settings.MEDIA_ROOT, str(document.file))
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404

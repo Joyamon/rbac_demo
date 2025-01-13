@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}文档列表 - Django RBAC 项目{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">文档列表</h1>
+
+{#    {% if user.has_permission('upload_document') %}#}
+    <div class="mb-4">
+        <a href="{% url 'upload_document' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            上传新文档
+        </a>
+    </div>
+{#    {% endif %}#}
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <table class="w-full">
+            <thead>
+                <tr>
+                    <th class="text-left py-2">标题</th>
+                    <th class="text-left py-2">上传者</th>
+                    <th class="text-left py-2">上传时间</th>
+                    <th class="text-left py-2">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for document in documents %}
+                <tr class="border-t">
+                    <td class="py-2">{{ document.title }}</td>
+                    <td class="py-2">{{ document.uploaded_by.username }}</td>
+                    <td class="py-2">{{ document.created_at|date:"Y-m-d H:i" }}</td>
+                    <td class="py-2">
+                        <a href="{% url 'view_document' document.id %}" class="text-blue-500 hover:text-blue-800 mr-2">查看</a>
+{#                        {% if user.has_permission('edit_document') %}#}
+                        <a href="{% url 'edit_document' document.id %}" class="text-green-500 hover:text-green-800 mr-2">编辑</a>
+{#                        {% endif %}#}
+{#                        {% if user.has_permission('download_document') %}#}
+                        <a href="{% url 'download_document' document.id %}" class="text-purple-500 hover:text-purple-800">下载</a>
+{#                        {% endif %}#}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-4">暂无文档</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

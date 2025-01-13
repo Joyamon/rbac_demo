@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     password_reset_token = models.CharField(max_length=100, null=True, blank=True)
+
     class Meta:
         permissions = [
             ("view_user_list", "Can view user list"),
@@ -141,3 +142,26 @@ class UserActivity(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.activity_type} at {self.timestamp}"
+
+
+def document_upload_path(instance, filename):
+    # 文件将被上传到 MEDIA_ROOT/documents/user_<id>/<filename>
+    return f'documents/user_{instance.uploaded_by.id}/{filename}'
+
+
+class Document(models.Model):
+    title = models.CharField(max_length=255)
+    file = models.FileField(upload_to=document_upload_path)
+    uploaded_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='uploaded_documents')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    def filename(self):
+        return os.path.basename(self.file.name)
+
+    def file_extension(self):
+        name, extension = os.path.splitext(self.file.name)
+        return extension
