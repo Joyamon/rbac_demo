@@ -640,14 +640,12 @@ def document_list(request):
 
 
 @login_required
-@permission_required('view_document')
 def document_list(request):
     documents = Document.objects.all()
     return render(request, 'accounts/document_list.html', {'documents': documents})
 
 
 @login_required
-@permission_required('upload_document')
 def upload_document(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -662,7 +660,6 @@ def upload_document(request):
 
 
 @login_required
-@permission_required('view_document')
 def view_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     return render(request, 'accounts/view_document.html', {'document': document})
@@ -676,7 +673,6 @@ def delete_document(request, document_id):
 
 
 @login_required
-@permission_required('edit_document')
 def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     if request.method == 'POST':
@@ -690,7 +686,6 @@ def edit_document(request, document_id):
 
 
 @login_required
-@permission_required('download_document')
 def download_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     file_path = os.path.join(settings.MEDIA_ROOT, str(document.file))
@@ -700,81 +695,3 @@ def download_document(request, document_id):
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
             return response
     raise Http404
-
-
-@login_required
-@permission_required('view_document')
-def view_document_content(request, document_id):
-    document = get_object_or_404(Document, id=document_id)
-    file_path = os.path.join(settings.MEDIA_ROOT, str(document.file))
-
-    if os.path.exists(file_path):
-        file_type = document.get_file_type()
-
-        if file_type == 'text':
-            with open(file_path, 'r', encoding='utf-8') as file:
-                content = file.read()
-
-            language = {
-                '.py': 'python',
-                '.js': 'javascript',
-                '.html': 'html',
-                '.css': 'css',
-                '.json': 'json',
-                '.xml': 'xml'
-            }.get(document.file_extension().lower(), 'plaintext')
-
-            context = {
-                'document': document,
-                'content': content,
-                'language': language,
-            }
-            return render(request, 'accounts/view_document_content.html', context)
-
-        elif file_type == 'word':
-            doc = DocxDocument(file_path)
-            content = []
-            images = []
-            for i, para in enumerate(doc.paragraphs):
-                content.append(para.text)
-                for run in para.runs:
-                    if run._element.findall('.//w:drawing', namespaces={
-                        'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}):
-                        for inline in run._element.findall('.//wp:inline', namespaces={
-                            'wp': 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing'}):
-                            blip = inline.find('.//a:blip', namespaces={
-                                'a': 'http://schemas.openxmlformats.org/drawingml/2006/main'})
-                            if blip is not None:
-                                img_id = blip.get(
-                                    '{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed')
-                                img_part = doc.part.related_parts[img_id]
-                                image = Image.open(io.BytesIO(img_part.blob))
-                                img_filename = f'document_{document.id}_image_{i}.png'
-                                img_path = os.path.join(settings.MEDIA_ROOT, 'document_images', str(document.id),
-                                                        img_filename)
-                                os.makedirs(os.path.dirname(img_path), exist_ok=True)
-                                image.save(img_path)
-                                doc_image = DocumentImage.objects.create(document=document,
-                                                                         image=f'document_images/{document.id}/{img_filename}')
-                                images.append(doc_image)
-                        content.append(f'[Image {len(images)}]')
-            context = {
-                'document': document,
-                'content': '\n'.join(content),
-                'images': images,
-            }
-            return render(request, 'accounts/view_word_content.html', context)
-
-        elif file_type == 'excel':
-            df = pd.read_excel(file_path)
-            html_table = df.to_html(classes='table table-striped table-bordered', index=False)
-            context = {
-                'document': document,
-                'html_table': html_table,
-            }
-            return render(request, 'accounts/view_excel_content.html', context)
-
-        else:
-            return redirect('view_document', document_id=document_id)
-    else:
-        return HttpResponse("文件不存在", status=404)
