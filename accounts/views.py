@@ -93,6 +93,7 @@ def home(request):
     total_users = CustomUser.objects.count()
     total_roles = Role.objects.count()
     total_permissions = Permission.objects.count()
+    total_documents = Document.objects.count()
 
     # 定义快速操作卡片
     quick_actions = [
@@ -121,8 +122,17 @@ def home(request):
             'bg_color': 'bg-purple-50',
             'text_color': 'text-purple-600',
             'hover_color': 'hover:bg-purple-100',
-            'permission': 'accounts.view_permission'
-        }
+            'permission': 'document_list'
+        },
+        {
+            'title': '文档管理',
+            'url': 'document_list',
+            'icon_class': 'book',
+            'bg_color': 'bg-red-50',
+            'text_color': 'text-red-600',
+            'hover_color': 'hover:bg-red-100',
+            'permission': 'accounts.view_document'
+        },
     ]
 
     # 过滤用户有权限访问的操作
@@ -146,6 +156,7 @@ def home(request):
         'total_users': total_users,
         'total_roles': total_roles,
         'total_permissions': total_permissions,
+        'total_documents': total_documents,
         'quick_actions': quick_actions,
         'recent_activities': recent_activities,
     }
