@@ -180,4 +180,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '1210777805@qq.com'  # 请替换自己的邮箱
 EMAIL_HOST_PASSWORD = 'umbclibpysdzffii'  # 请替换自己的邮箱授权码
 
-
+DEEPSEEK_API_KEY = "sk-2608b95c1ddb42079e637522eb7e3bf9"
+# OpenAI API Settings
+# OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')

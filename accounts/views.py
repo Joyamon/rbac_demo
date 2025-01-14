@@ -1,17 +1,21 @@
 import json
 import os
+from datetime import datetime
+
+import requests
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import ProtectedError
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import HttpResponse, Http404, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.crypto import get_random_string
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_http_methods
+from openai import OpenAI
 
 from .models import Role, Permission, UserRole, CustomUser, UserActivity, Document, DocumentImage
 from .forms import RoleForm, PermissionForm, CustomUserCreationForm, CustomAuthenticationForm, UserEditForm, \
@@ -22,10 +26,6 @@ from django.db.models import Q
 from .forms import ForgotPasswordForm, ResetPasswordForm
 from .signals import user_edited, user_deleted, user_assigned_role, add_role, user_details, add_permission, \
     del_permission, edit_role_signal, del_role_signal, assign_permission_signal
-from docx import Document as DocxDocument
-import pandas as pd
-import io
-from PIL import Image
 
 logger = logging.getLogger(__name__)
 
@@ -706,3 +706,156 @@ def download_document(request, document_id):
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
             return response
     raise Http404
+
+
+@login_required
+def chat_view(request):
+    # Get chat history from session or initialize empty
+    messages = request.session.get('chat_messages', [])
+    return render(request, 'accounts/chat.html', {'messages': messages})
+
+
+@login_required
+@require_http_methods(["POST"])
+def chat_message(request):
+    try:
+        # Get or create a unique request ID from the session
+        request_id = request.session.get('last_request_id')
+        current_request_id = request.POST.get('request_id')
+
+        # Check if this is a duplicate request
+        if request_id == current_request_id:
+            return JsonResponse({'error': 'Duplicate request'}, status=429)
+
+        # Update the request ID
+        request.session['last_request_id'] = current_request_id
+
+        message = request.POST.get('message')
+        if not message:
+            return JsonResponse({'error': 'No message provided'}, status=400)
+
+        # Get chat history from session or initialize empty
+        messages = request.session.get('chat_messages', [])
+
+        # Check if we're still waiting for a response
+        if messages and messages[-1].get('status') == 'pending':
+            return JsonResponse({'error': 'Previous request still processing'}, status=429)
+
+        # Add user message to history
+        messages.append({
+            'role': 'user',
+            'content': message,
+            'timestamp': datetime.now().isoformat()
+        })
+
+        def generate_response():
+            nonlocal messages  # Use nonlocal to access outer scope messages
+            try:
+                # Add a pending message to prevent duplicate requests
+                messages.append({
+                    'role': 'assistant',
+                    'content': '',
+                    'status': 'pending',
+                    'timestamp': datetime.now().isoformat()
+                })
+                request.session['chat_messages'] = messages
+                request.session.modified = True
+
+                # DeepSeek API endpoint
+                url = "https://api.deepseek.com/v1/chat/completions"
+
+                # Prepare headers
+                headers = {
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {settings.DEEPSEEK_API_KEY}"
+                }
+
+                # Prepare data - exclude pending messages from the context
+                data = {
+                    "model": "deepseek-chat",
+                    "messages": [{'role': m['role'], 'content': m['content']}
+                                 for m in messages if m.get('status') != 'pending'],
+                    "temperature": 0.7,
+                    "stream": True,
+                    "max_tokens": 2000,
+
+
+                }
+
+                # Make streaming request
+                response = requests.post(
+                    url,
+                    headers=headers,
+                    json=data,
+                    stream=True
+                )
+
+                if response.status_code != 200:
+                    error_msg = f"API Error: {response.status_code} - {response.text}"
+                    logger.error(error_msg)
+                    # Remove pending message on error
+                    messages.pop()
+                    request.session['chat_messages'] = messages
+                    request.session.modified = True
+                    yield error_msg
+                    return
+
+                collected_messages = []
+
+                # Process the streaming response
+                for line in response.iter_lines():
+                    if line:
+                        try:
+                            # Remove 'data: ' prefix and parse JSON
+                            line_text = line.decode('utf-8')
+                            if line_text.startswith('data: '):
+                                json_str = line_text[6:]  # Remove 'data: ' prefix
+                                if json_str == '[DONE]':
+                                    break
+
+                                json_data = json.loads(json_str)
+                                if json_data.get('choices') and json_data['choices'][0].get('delta', {}).get('content'):
+                                    content = json_data['choices'][0]['delta']['content']
+                                    collected_messages.append(content)
+                                    yield content
+                        except json.JSONDecodeError as e:
+                            logger.error(f"JSON decode error: {e}")
+                            continue
+                        except Exception as e:
+                            logger.error(f"Error processing stream: {e}")
+                            continue
+
+                # After streaming is complete, save the full message to session
+                full_response = ''.join(collected_messages)
+
+                # Replace pending message with complete message
+                messages[-1] = {
+                    'role': 'assistant',
+                    'content': full_response,
+                    'status': 'complete',
+                    'timestamp': datetime.now().isoformat()
+                }
+
+                # Trim message history if it gets too long
+                if len(messages) > 50:  # Keep last 50 messages
+                    messages = messages[-50:]
+
+                request.session['chat_messages'] = messages
+                request.session.modified = True
+
+            except Exception as e:
+                error_msg = f"Error: {str(e)}"
+                logger.error(error_msg)
+                # Remove pending message on error
+                if messages and messages[-1].get('status') == 'pending':
+                    messages.pop()
+                request.session['chat_messages'] = messages
+                request.session.modified = True
+                yield error_msg
+
+        return StreamingHttpResponse(generate_response(), content_type='text/event-stream')
+
+    except Exception as e:
+        logger.error(f"Unexpected error in chat_message view: {str(e)}")
+        return JsonResponse({'error': 'Internal server error'}, status=500)
+

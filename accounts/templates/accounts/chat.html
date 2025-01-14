@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI 助手 - Django RBAC 项目{% endblock %}
+
+{% block extra_head %}
+<style>
+    .messages-container {
+        height: calc(10vh - 600px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(156, 163, 175, 0.5) rgba(229, 231, 235, 0.5);
+    }
+    .messages-container::-webkit-scrollbar {
+        width: 8px;
+    }
+    .messages-container::-webkit-scrollbar-track {
+        background: rgba(229, 231, 235, 0.5);
+    }
+    .messages-container::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175, 0.5);
+        border-radius: 3px;
+    }
+    .message-content {
+        white-space: pre-wrap;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100">
+    <div class="container mx-auto px-12 py-20">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="p-6 bg-gray-800 text-white">
+                <h1 class="text-2xl font-bold mb-2">AI 助手</h1>
+                <p class="text-gray-300">我可以帮助您解答问题、编写代码、分析数据等。</p>
+            </div>
+
+            <!-- Messages Container -->
+            <div id="messages" class="messages-container p-6 space-y-4">
+                {% for message in messages %}
+                <div class="flex {% if message.role == 'assistant' %}justify-start{% else %}justify-end{% endif %}">
+                    <div class="max-w-3/4 {% if message.role == 'assistant' %}bg-blue-100 text-blue-800{% else %}bg-green-100 text-green-800{% endif %} rounded-lg p-3 shadow">
+                        <div class="flex items-center mb-1">
+                            {% if message.role == 'assistant' %}
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"></path>
+                            </svg>
+                            <span class="font-semibold">AI 助手</span>
+                            {% else %}
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"></path>
+                            </svg>
+                            <span class="font-semibold">您</span>
+                            {% endif %}
+                        </div>
+                        <div class="message-content">{{ message.content }}</div>
+                        {% if message.timestamp %}
+                        <div class="text-xs text-gray-500 mt-1">{{ message.timestamp|date:"Y-m-d H:i:s" }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Input Form -->
+            <form method="post" class="p-6 bg-gray-100" id="chat-form">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" id="request_id">
+                <div class="flex items-center space-x-3">
+                    <textarea
+                        name="message"
+                        rows="1"
+                        class="flex-grow px-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                        placeholder="输入您的问题..."
+                        required
+                    ></textarea>
+                    <button
+                        type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+                        id="submit-button"
+                    >
+                        发送
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('chat-form');
+    const submitButton = document.getElementById('submit-button');
+    const messagesContainer = document.getElementById('messages');
+    const textarea = form.querySelector('textarea');
+    const requestIdInput = document.getElementById('request_id');
+
+    function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    scrollToBottom();
+
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        if (submitButton.disabled) {
+            return;
+        }
+
+        const formData = new FormData(form);
+        submitButton.disabled = true;
+
+        const requestId = generateUUID();
+        requestIdInput.value = requestId;
+        formData.set('request_id', requestId);
+
+        try {
+            const response = await fetch('{% url "chat_message" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                }
+            });
+
+            if (response.status === 429) {
+                const data = await response.json();
+                console.warn('Rate limited:', data.error);
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const reader = response.body.getReader();
+            let message = '';
+            let messageDiv = null;
+
+            while (true) {
+                const {done, value} = await reader.read();
+                if (done) break;
+
+                const text = new TextDecoder().decode(value);
+                message += text;
+
+                if (!messageDiv) {
+                    messageDiv = document.createElement('div');
+                    messageDiv.className = 'flex justify-start';
+                    messageDiv.innerHTML = `
+                        <div class="max-w-3/4 bg-blue-100 text-blue-800 rounded-lg p-3 shadow">
+                            <div class="flex items-center mb-1">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                                </svg>
+                                <span class="font-semibold">AI 助手</span>
+                            </div>
+                            <div class="message-content"></div>
+                            <div class="text-xs text-gray-500 mt-1">${new Date().toLocaleString()}</div>
+                        </div>
+                    `;
+                    messagesContainer.appendChild(messageDiv);
+                }
+
+                messageDiv.querySelector('.message-content').textContent = message;
+                scrollToBottom();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('发送消息时出错，请重试');
+        } finally {
+            submitButton.disabled = false;
+            form.reset();
+            textarea.style.height = 'auto';
+        }
+    });
+
+    const debouncedScroll = debounce(function() {
+        if (messagesContainer.scrollTop + messagesContainer.clientHeight >= messagesContainer.scrollHeight - 100) {
+            scrollToBottom();
+        }
+    }, 100);
+
+    messagesContainer.addEventListener('scroll', debouncedScroll);
+});
+</script>
+{% endblock %}
+

@@ -54,6 +54,8 @@ urlpatterns = [
     path('documents/<int:document_id>/edit/', account_views.edit_document, name='edit_document'),
     path('documents/<int:document_id>/download/', account_views.download_document, name='download_document'),
     path('documents/<int:document_id>/delete/', account_views.delete_document, name='delete_document'),
+    path('chat/', account_views.chat_view, name='chat'),
+    path('chat/message/', account_views.chat_message, name='chat_message'),
 
 ]
 
