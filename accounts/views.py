@@ -129,7 +129,7 @@ def home(request):
             'url': 'document_list',
             'icon_class': 'book',
             'bg_color': 'bg-red-50',
-            'text_color': 'text-red-600',
+            'text_color': 'text-green-600',
             'hover_color': 'hover:bg-red-100',
             'permission': 'accounts.view_document'
         },
@@ -778,7 +778,6 @@ def chat_message(request):
                     "temperature": 0.7,
                     "stream": True,
                     "max_tokens": 2000,
-
 
                 }
 

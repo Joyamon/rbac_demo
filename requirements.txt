@@ -12,3 +12,4 @@ tinycss2==1.4.0
 typing_extensions==4.12.2
 tzdata==2024.2
 webencodings==0.5.1
+django-simpleui==2025.1.13

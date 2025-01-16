@@ -10,10 +10,12 @@ logger = logging.getLogger(__name__)
 
 
 class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True)
-    password_reset_token = models.CharField(max_length=100, null=True, blank=True)
+    email = models.EmailField(unique=True,verbose_name='邮箱')
+    password_reset_token = models.CharField(max_length=100, null=True, blank=True,verbose_name='重置密码令牌')
 
     class Meta:
+        verbose_name = '用户'
+        verbose_name_plural = verbose_name
         permissions = [
             ("view_user_list", "Can view user list"),
             ("manage_roles", "Can manage roles"),
@@ -79,9 +81,9 @@ class CustomUser(AbstractUser):
 
 
 class Permission(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    codename = models.CharField(max_length=100, unique=True)
-    description = models.TextField(blank=True)
+    name = models.CharField(max_length=255, unique=True,verbose_name='权限名称')
+    codename = models.CharField(max_length=100, unique=True,verbose_name='权限代码')
+    description = models.TextField(blank=True,verbose_name='权限描述')
 
     def clean(self):
         if not self.codename:
@@ -99,12 +101,14 @@ class Permission(models.Model):
 
     class Meta:
         ordering = ['codename']
+        verbose_name = '权限'
+        verbose_name_plural = verbose_name
 
 
 class Role(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(blank=True)
-    permissions = models.ManyToManyField(Permission, related_name='roles')
+    name = models.CharField(max_length=255, unique=True,verbose_name='角色名称')
+    description = models.TextField(blank=True,verbose_name='角色描述')
+    permissions = models.ManyToManyField(Permission, related_name='roles',verbose_name='权限')
 
     def clean(self):
         if not self.name:
@@ -120,11 +124,13 @@ class Role(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name = '角色'
+        verbose_name_plural = verbose_name
 
 
 class UserRole(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='user_roles')
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='user_roles',verbose_name='用户')
+    role = models.ForeignKey(Role, on_delete=models.CASCADE,verbose_name='角色')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -133,18 +139,25 @@ class UserRole(models.Model):
     class Meta:
         unique_together = ('user', 'role')
         ordering = ['user', 'role']
+        verbose_name = "用户角色"
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return f"{self.user.username} - {self.role.name}"
 
 
 class UserActivity(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    activity_type = models.CharField(max_length=255)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,verbose_name='用户')
+    activity_type = models.CharField(max_length=255,verbose_name='活动类型')
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name='时间')
 
     def __str__(self):
         return f"{self.user.username} - {self.activity_type} at {self.timestamp}"
+
+    class Meta:
+        ordering = ['-timestamp']
+        verbose_name = '用户活动'
+        verbose_name_plural = verbose_name
 
 
 def document_upload_path(instance, filename):

@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -101,9 +102,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "zh-hans"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Shanghai"
 
 USE_I18N = True
 
@@ -179,7 +180,12 @@ EMAIL_PORT = 25
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = '1210777805@qq.com'  # 请替换自己的邮箱
 EMAIL_HOST_PASSWORD = 'umbclibpysdzffii'  # 请替换自己的邮箱授权码
-
+# 深度搜索 deepseek
 DEEPSEEK_API_KEY = "sk-2608b95c1ddb42079e637522eb7e3bf9"
 # OpenAI API Settings
 # OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+# 站点标题
+SITE_TITLE = 'RBAC管理后台'
+# simpleui 配置
+SIMPLEUI_HOME_INFO = False
